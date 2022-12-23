@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 
-const Admin = () => {
+const Staff = () => {
     const input_data_structure = {
         name: {
             key: "name",
@@ -51,7 +51,7 @@ const Admin = () => {
     };
 
     const [inputs, set_inputs] = useState(input_data_structure);
-    const [title, set_title] = useState("citizen");
+    const [title, set_title] = useState("Programms");
 
     const handle_change = (e, input) => {
         input.value = e.target.value;
@@ -104,43 +104,7 @@ const Admin = () => {
                 <div className="col-span-2">
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("citizen")}
-                    >
-                        <img
-                            className="w-[70px] h-auto m-auto mt-[15px]"
-                            src="/assets/Rectangle36.png"
-                        ></img>
-                        <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Citizens</h1>
-                        </div>
-                    </div>
-                    <div
-                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("admin")}
-                    >
-                        <img
-                            className="w-[70px] h-auto m-auto mt-[15px]"
-                            src="/assets/Rectangle36.png"
-                        ></img>
-                        <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Admins</h1>
-                        </div>
-                    </div>
-                    <div
-                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("staff")}
-                    >
-                        <img
-                            className="w-[70px] h-auto m-auto mt-[15px]"
-                            src="/assets/Rectangle36.png"
-                        ></img>
-                        <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Staff</h1>
-                        </div>
-                    </div>
-                    <div
-                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("programms")}
+                        onClick={() => show_tab("Programms")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
@@ -164,4 +128,4 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default Staff;
