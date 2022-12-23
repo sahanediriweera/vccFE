@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login, Register, Manager, Admin } from "./pages";
+import { Login, Register, Manager, Admin, Staff } from "./pages";
 
 const Router = () => {
     return (
@@ -11,6 +11,7 @@ const Router = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/manager" element={<Manager />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/staff" element={<Staff />} />
             </Routes>
         </BrowserRouter>
     );
