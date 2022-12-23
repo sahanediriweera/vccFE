@@ -51,7 +51,7 @@ const Register = () => {
     };
 
     const [inputs, set_inputs] = useState(input_data_structure);
-    const [role, set_role] = useState("Mnager");
+    const [role, set_role] = useState("Manager");
 
     const handle_change = (e, input) => {
         input.value = e.target.value;

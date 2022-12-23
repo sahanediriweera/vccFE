@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 
+import { useSelector, useDispatch } from "react-redux";
+import { user_logged_in } from "../redux/actions";
+
 const Login = () => {
+    const dispatch = useDispatch();
+
     const input_data_structure = {
         role: {
             key: "role",
@@ -82,9 +87,9 @@ const Login = () => {
 
                         toast.success("Logged in successfully!");
 
-                        // setTimeout(() => {
-                        //     dispatch(user_logged_in(user_data));
-                        // }, 1000);
+                        setTimeout(() => {
+                            dispatch(user_logged_in(user_data));
+                        }, 1000);
                     }
                 })
                 .catch((e) => {
