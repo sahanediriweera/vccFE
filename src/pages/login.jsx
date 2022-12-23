@@ -70,7 +70,10 @@ const Login = () => {
         };
 
         try {
-            Axios.get("https://localhost:7092/api/Admin/managers", data)
+            Axios.post(
+                "https://localhost:7092/api/" + inputs.role.value + "Admin/",
+                data
+            )
                 .then((response) => {
                     if (response.status == 200) {
                         const user_data = {
