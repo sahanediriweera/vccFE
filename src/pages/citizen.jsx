@@ -12,10 +12,10 @@ const Citizen = () => {
     const show_tab = (tab) => {
         set_title(tab);
         try {
-            Axios.post("127.0.0.1/api/Signup/", data)
+            Axios.get("127.0.0.1/api/citizen/" + "test_id", data)
                 .then((response) => {
                     if (response.status == 200) {
-                        set_data(response.data.result.data);
+                        set_data(response.data);
                     }
                 })
                 .catch((e) => {
@@ -63,7 +63,7 @@ const Citizen = () => {
                         <h1 className="text-white font-extrabold text-3xl">
                             {title}
                         </h1>
-                        <JsonToTable />
+                        <JsonToTable json={data} />
                         <div className="grid grid-cols-2 gap-4">
                             <div></div>
                             <div></div>
