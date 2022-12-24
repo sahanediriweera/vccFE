@@ -3,6 +3,7 @@ import { Button, Input, Select } from "../Components/common/ui";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
+import { Navigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { user_logged_in } from "../redux/actions";
@@ -74,6 +75,8 @@ const Login = () => {
             password: inputs.password.value,
         };
 
+        return <Navigate replace to="/dfg" />;
+
         try {
             Axios.post(
                 "https://localhost:7092/api/" + inputs.role.value + "Admin/",
@@ -89,6 +92,7 @@ const Login = () => {
 
                         setTimeout(() => {
                             dispatch(user_logged_in(user_data));
+                            return <Navigate replace to="/dfg" />;
                         }, 1000);
                     }
                 })
