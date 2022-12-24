@@ -69,13 +69,13 @@ const Register = () => {
         const data = {
             name: inputs.name.value,
             email: inputs.email.value,
-            nic: inputs.nic.value,
+            citizenid: inputs.nic.value,
             password: inputs.password.value,
-            password_conf: inputs.password_conf.value,
+            confirmpassword: inputs.password_conf.value,
         };
 
         try {
-            Axios.post("127.0.0.1/api/Signup/" + role, data)
+            Axios.post("https://localhost:7092/api/Signup/" + role, data)
                 .then((response) => {
                     if (response.status == 200) {
                         const user_data = {
@@ -146,7 +146,7 @@ const Register = () => {
 
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => set_role("administrator")}
+                        onClick={() => set_role("admin")}
                     >
                         <img
                             className="w-[100px] h-auto m-auto mt-[15px] "

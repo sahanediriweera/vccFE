@@ -1,8 +1,7 @@
 .container {
-    font-family: sans-serif;
-    text-align: center;
-    background-image: url('../../assets/background.jpeg');
-    height: calc(100vh - 64px);
-    background-size: 100%;
-  }
-  
+  font-family: sans-serif;
+  text-align: center;
+  background-image: url("../../../public/assets/background.jpeg");
+  height: calc(100vh - 64px);
+  background-size: 100%;
+}

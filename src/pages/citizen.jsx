@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
 
-const Admin = () => {
+const Citizen = () => {
     const input_data_structure = {
         delete_id: {
             key: "delete_id",
@@ -221,4 +221,4 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default Citizen;
