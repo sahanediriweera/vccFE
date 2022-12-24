@@ -75,7 +75,7 @@ const Login = () => {
             password: inputs.password.value,
         };
 
-        return <Navigate replace to="/dfg" />;
+        //return <Navigate replace to="/dfg" />;
 
         try {
             Axios.post(
