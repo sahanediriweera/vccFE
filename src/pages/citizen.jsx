@@ -6,6 +6,7 @@ import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
 
 const Citizen = () => {
+<<<<<<< HEAD
     const input_data_structure = {
         delete_id: {
             key: "delete_id",
@@ -28,55 +29,18 @@ const Citizen = () => {
 
     const [inputs, set_inputs] = useState(input_data_structure);
     const [title, set_title] = useState("citizen");
+=======
+    const [title, set_title] = useState("My details");
+>>>>>>> 4eb0105e22aa093ac7a975efb4849983ffbe5f62
     const [data, set_data] = useState({});
-
-    const handle_change = (e, input) => {
-        input.value = e.target.value;
-        input.is_valid = e.target.value ? true : false;
-        input.error = e.target.value ? "" : "Please input the password";
-
-        let input_list = { ...inputs };
-        input_list[input.key] = input;
-        set_inputs(input_list);
-    };
-
-    const handle_submit = async () => {
-        const event = window.event;
-        event.preventDefault();
-        const data = {
-            name: inputs.name.value,
-            email: inputs.email.value,
-            nic: inputs.nic.value,
-            password: inputs.password.value,
-            password_conf: inputs.password_conf.value,
-        };
-
-        try {
-            Axios.post("127.0.0.1/api/Signup/", data)
-                .then((response) => {
-                    if (response.status == 200) {
-                        const user_data = {
-                            token: response.data.result.token,
-                        };
-
-                        toast.success("Registered successfully!");
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
-        }
-    };
 
     const show_tab = (tab) => {
         set_title(tab);
         try {
-            Axios.post("127.0.0.1/api/Signup/", data)
+            Axios.get("127.0.0.1/api/citizen/" + "test_id", data)
                 .then((response) => {
                     if (response.status == 200) {
-                        set_data(response.data.result.data);
+                        set_data(response.data);
                     }
                 })
                 .catch((e) => {
@@ -85,57 +49,6 @@ const Citizen = () => {
         } catch (e) {
             toast.error(e);
         }
-    };
-
-    const handle_delete = () => {
-        try {
-            Axios.delete("127.0.0.1/api/" + title + inputs.delete_id.value)
-                .then((response) => {
-                    if (response.status == 200) {
-                        const user_data = {
-                            token: response.data.result.token,
-                        };
-
-                        toast.success("Deleted successfully!");
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
-        }
-    };
-
-    const handle_approve = () => {
-        try {
-            Axios.delete("127.0.0.1/api/" + title + inputs.delete_id.value)
-                .then((response) => {
-                    if (response.status == 200) {
-                        const user_data = {
-                            token: response.data.result.token,
-                        };
-
-                        toast.success("Approved successfully!");
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
-        }
-    };
-
-    const myJson = {
-        Sponsors: [
-            { name: "john", email: "john@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-        ],
     };
 
     return (
@@ -145,50 +58,28 @@ const Citizen = () => {
                 <div className="col-span-2">
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("citizen")}
+                        onClick={() => show_tab("My details")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
                             src="/assets/Rectangle36.png"
                         ></img>
                         <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Citizens</h1>
+                            <h1 className="text-white mt-8 ">My details</h1>
                         </div>
                     </div>
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("admin")}
+                        onClick={() => show_tab("Vaccination data")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
                             src="/assets/Rectangle36.png"
                         ></img>
                         <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Admins</h1>
-                        </div>
-                    </div>
-                    <div
-                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("staff")}
-                    >
-                        <img
-                            className="w-[70px] h-auto m-auto mt-[15px]"
-                            src="/assets/Rectangle36.png"
-                        ></img>
-                        <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Staff</h1>
-                        </div>
-                    </div>
-                    <div
-                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("programms")}
-                    >
-                        <img
-                            className="w-[70px] h-auto m-auto mt-[15px]"
-                            src="/assets/Rectangle36.png"
-                        ></img>
-                        <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Programms</h1>
+                            <h1 className="text-white mt-8 ">
+                                Vaccination data
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -197,22 +88,10 @@ const Citizen = () => {
                         <h1 className="text-white font-extrabold text-3xl">
                             {title}
                         </h1>
-                        <JsonToTable json={myJson} />
+                        <JsonToTable json={data} />
                         <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <Input input={inputs.delete_id}></Input>
-                                <Button
-                                    text="Delete"
-                                    handle_click={handle_delete}
-                                ></Button>
-                            </div>
-                            <div>
-                                <Input input={inputs.approve_id}></Input>
-                                <Button
-                                    text="Approve"
-                                    handle_click={handle_approve}
-                                ></Button>
-                            </div>
+                            <div></div>
+                            <div></div>
                         </div>
                     </div>
                 </div>
