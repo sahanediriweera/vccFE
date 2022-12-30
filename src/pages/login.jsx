@@ -4,19 +4,17 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import { user_logged_in } from "../redux/actions";
 
 const Login = () => {
     const dispatch = useDispatch();
-    const nav = useNavigate();
+
     const input_data_structure = {
         role: {
             key: "role",
             text: "Role",
-            value: "citizen",
+            value: "0",
             is_valid: true,
             error: "",
             list_items: [
@@ -58,7 +56,6 @@ const Login = () => {
     };
     const handle_selection = async (e, input) => {
         const value = e.target.value;
-        console.log(e);
         input.value = value;
 
         let input_list = { ...inputs };
@@ -81,12 +78,10 @@ const Login = () => {
 
         try {
             Axios.post(
-                "https://localhost:7092/api/Login/" + inputs.role.value,
+                "https://localhost:7092/api/" + inputs.role.value + "Admin/",
                 data
             )
                 .then((response) => {
-                    console.log(inputs.role.value);
-                        nav(`/${inputs.role.value}`);
                     if (response.status == 200) {
                         const user_data = {
                             token: response.data.result.token,

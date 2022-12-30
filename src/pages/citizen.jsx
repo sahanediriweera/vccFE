@@ -6,32 +6,7 @@ import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
 
 const Citizen = () => {
-<<<<<<< HEAD
-    const input_data_structure = {
-        delete_id: {
-            key: "delete_id",
-            text: "Delete Id",
-            type: "text",
-            value: "",
-            is_valid: true,
-            error: "",
-        },
-
-        approve_id: {
-            key: "approve_id",
-            text: "Approval Id",
-            type: "text",
-            value: "",
-            is_valid: true,
-            error: "",
-        },
-    };
-
-    const [inputs, set_inputs] = useState(input_data_structure);
-    const [title, set_title] = useState("citizen");
-=======
     const [title, set_title] = useState("My details");
->>>>>>> 4eb0105e22aa093ac7a975efb4849983ffbe5f62
     const [data, set_data] = useState({});
 
     const show_tab = (tab) => {

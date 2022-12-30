@@ -1,65 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../Components/common/ui";
 
-const Login = () => {
-    const input_data_structure = {
-        name: {
-            key: "name",
-            text: "Name",
-            type: "text",
-            value: "",
-            is_valid: true,
-            error: "",
-        },
-        email: {
-            key: "email",
-            text: "Email",
-            type: "email",
-            value: "",
-            is_valid: true,
-            error: "",
-        },
-        nic: {
-            key: "nic",
-            text: "nic",
-            type: "text",
-            value: "",
-            is_valid: true,
-            error: "",
-        },
-        password: {
-            key: "password",
-            text: "Password",
-            type: "password",
-            value: "",
-            mask: true,
-            is_valid: true,
-            error: "",
-        },
-        password_conf: {
-            key: "password_conf",
-            text: "Password confirmation",
-            type: "password",
-            value: "",
-            mask: true,
-            is_valid: true,
-            error: "",
-        },
-    };
-
-    const [inputs, set_inputs] = useState(input_data_structure);
-
-    const handle_selection = async (e, input) => {
-        const value = e.target.value;
-        input.value = value;
-
-        let input_list = { ...inputs };
-
-        input_list[input.key] = input;
-
-        set_inputs(input_list);
-    };
-
+const Manager = () => {
     return (
         <div>
             <div className="grid grid-cols-10">
@@ -129,4 +71,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Manager;

@@ -29,8 +29,6 @@ const Admin = () => {
     const [inputs, set_inputs] = useState(input_data_structure);
     const [title, set_title] = useState("citizen");
     const [data, set_data] = useState({});
-    const [employees, setEmployees] = useState([]);
-    const myJson={Sponcer:[]};
 
     const handle_change = (e, input) => {
         input.value = e.target.value;
@@ -54,7 +52,7 @@ const Admin = () => {
         };
 
         try {
-            Axios.get("https://localhost:7092/api/Admin/managers")
+            Axios.post("127.0.0.1/api/Signup/", data)
                 .then((response) => {
                     if (response.status == 200) {
                         const user_data = {
@@ -74,16 +72,11 @@ const Admin = () => {
 
     const show_tab = (tab) => {
         set_title(tab);
-        console.log(tab);
         try {
-            Axios.get("https://localhost:7092/api/Admin/"+tab)
+            Axios.post("127.0.0.1/api/Signup/", data)
                 .then((response) => {
-                    setEmployees(response.data);
-                    myJson.Sponcer=response.data
-                    console.log(myJson)
                     if (response.status == 200) {
-                        
-                        console.log(response.status);
+                        set_data(response.data.result.data);
                     }
                 })
                 .catch((e) => {
@@ -132,6 +125,17 @@ const Admin = () => {
         } catch (e) {
             toast.error(e);
         }
+    };
+
+    const myJson = {
+        Sponsors: [
+            { name: "john", email: "john@@xyz.com" },
+            { name: "jane", email: "jane@@xyz.com" },
+            { name: "jane", email: "jane@@xyz.com" },
+            { name: "jane", email: "jane@@xyz.com" },
+            { name: "jane", email: "jane@@xyz.com" },
+            { name: "jane", email: "jane@@xyz.com" },
+        ],
     };
 
     return (

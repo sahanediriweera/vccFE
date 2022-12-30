@@ -5,16 +5,20 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "./redux/reducer";
 
-const store = createStore(rootReducer);
+import store, { presistor } from "./redux/store";
+import setAuthToken from "./redux/auth/auth.utils";
+import { loadUser } from "./redux/auth/auth.actions";
+import { PersistGate } from "redux-persist/integration/react";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <Router />
-        </Provider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={presistor}>
+        <Router />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
 );
