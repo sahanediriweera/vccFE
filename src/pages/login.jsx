@@ -4,11 +4,22 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+
 import { user_logged_in } from "../redux/actions";
 
-const Login = () => {
-    const dispatch = useDispatch();
+
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import {
+    adminLogin,citizenLogin,staffLogin,managerLogin
+  } from "../redux/auth/auth.actions";
+
+
+
+const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated}) => {
+
 
     const input_data_structure = {
         role: {
@@ -49,19 +60,16 @@ const Login = () => {
         input.value = e.target.value;
         input.is_valid = e.target.value ? true : false;
         input.error = e.target.value ? "" : "Please input the password";
-
         let input_list = { ...inputs };
         input_list[input.key] = input;
         set_inputs(input_list);
     };
+
     const handle_selection = async (e, input) => {
         const value = e.target.value;
         input.value = value;
-
         let input_list = { ...inputs };
-
         input_list[input.key] = input;
-
         set_inputs(input_list);
     };
 
@@ -69,40 +77,50 @@ const Login = () => {
         const event = window.event;
         event.preventDefault();
         const data = {
-            role: inputs.role.value,
             email: inputs.email.value,
             password: inputs.password.value,
         };
+        if (inputs.role.value === "manager") {
+            managerLogin(data);
+          } else if (inputs.role.value === "citizen") {
+            citizenLogin(data);
+          } else if (inputs.role.value === "administrator") {
+            adminLogin(data);
+          } else if (inputs.role.value === "staff") {
+            staffLogin(data);
+          }
 
-        //return <Navigate replace to="/dfg" />;
+     
+      
 
-        try {
-            Axios.post(
-                "https://localhost:7092/api/" + inputs.role.value + "Admin/",
-                data
-            )
-                .then((response) => {
-                    if (response.status == 200) {
-                        const user_data = {
-                            token: response.data.result.token,
-                        };
+        // try {
+        //     Axios.post(
+        //         "https://localhost:7092/api/Login/" + inputs.role.value,
+        //         data
+        //     )
+        //         .then((response) => {
+        //             if (response.status == 200) {
+        //                 const user_data = {
+        //                     token: response.data.result.token,
+        //                 };
 
-                        toast.success("Logged in successfully!");
+        //                 toast.success("Logged in successfully!");
 
-                        setTimeout(() => {
-                            dispatch(user_logged_in(user_data));
-                            return <Navigate replace to="/dfg" />;
-                        }, 1000);
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
-        }
+        //                 setTimeout(() => {
+        //                     dispatch(user_logged_in(user_data));
+        //                     return <Navigate replace to="/dfg" />;
+        //                 }, 1000);
+        //             }
+        //         })
+        //         .catch((e) => {
+        //             toast.error(e);
+        //         });
+        // } catch (e) {
+        //     toast.error(e);
+        // }
     };
 
+    if(isAuthenticated) {  return <Navigate replace to={`/home`} />;}
     return (
         <>
             <ToastContainer />
@@ -141,4 +159,14 @@ const Login = () => {
     );
 };
 
-export default Login;
+
+const mapStateToProps = (state) => ({
+    dt: console.log(state),
+    isAuthenticated: state.auth.isAuthenticated
+  });
+  
+  
+  export default connect(mapStateToProps, {
+    adminLogin,citizenLogin,staffLogin,managerLogin
+  })(Login);
+

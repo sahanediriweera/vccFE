@@ -9,7 +9,7 @@ import {
   ADMIN_LOGIN_SUCCESS,
   STAFF_LOGIN_SUCCESS,
   CITIZEN_LOGIN_SUCCESS,
-
+  LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
 
@@ -58,10 +58,10 @@ import { BASE_URL } from "../../api/url";
   };
 
   export const registerStaff =
-  ({ name, phoneNumber, email, password, confirmPassword, citizenId }) =>
+  ({ name, phoneNumber, email, password, confirmPassword, citizenID }) =>
   async (dispatch) => {
     try {
-      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenId });
+      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenID });
 
       const config_headers = {
         headers: {
@@ -127,12 +127,13 @@ import { BASE_URL } from "../../api/url";
           Accept: "application/json",
         },
       };  
-      const res = await axios.post(`${BASE_URL}/SignUp/sitizen`, body, config_headers);
+      const res = await axios.post(`${BASE_URL}/SignUp/citizen`, body, config_headers);
       dispatch({
         type: CITIZEN_REG_SUCCESS,
-        payload: res,
+        payload: res.data,
       });
 
+      console.log(res.data)
       dispatch(setAlert(res.data.message, "success"));
 
       // dispatch(loadUser());
@@ -161,11 +162,11 @@ export const adminLogin =
       const res = await axios.post(`${BASE_URL}/Login/admin`, body, config_headers);
 
       dispatch({
-        type: ADMIN_LOGIN_SUCCESS,
-        payload: res,
+        type: LOGIN_SUCCESS,
+        payload: res.data,
       });
 
-      dispatch(setAlert(res.data.msg, "success"));
+      // dispatch(setAlert(res.data.msg, "success"));
 
       // dispatch(loadUser());
     } catch (err) {
@@ -191,8 +192,8 @@ export const adminLogin =
       const res = await axios.post(`${BASE_URL}/Login/manager`, body, config_headers);
 
       dispatch({
-        type: MANAGER_LOGIN_SUCCESS,
-        payload: res,
+        type: LOGIN_SUCCESS,
+        payload: res.data,
       });
 
       dispatch(setAlert(res.data.msg, "success"));
@@ -221,11 +222,11 @@ export const adminLogin =
       const res = await axios.post(`${BASE_URL}/Login/staff`, body, config_headers);
 
       dispatch({
-        type: STAFF_LOGIN_SUCCESS,
-        payload: res,
+        type: LOGIN_SUCCESS,
+        payload: res.data,
       });
 
-      dispatch(setAlert(res.data.msg, "success"));
+      // dispatch(setAlert(res.data.msg, "success"));
 
       // dispatch(loadUser());
     } catch (err) {
@@ -251,11 +252,11 @@ export const adminLogin =
       const res = await axios.post(`${BASE_URL}/Login/citizen`, body, config_headers);
 
       dispatch({
-        type: CITIZEN_LOGIN_SUCCESS,
-        payload: res,
+        type: LOGIN_SUCCESS,
+        payload: res.data,
       });
 
-      dispatch(setAlert(res.data.msg, "success"));
+      // dispatch(setAlert(res.data.msg, "success"));
 
       // dispatch(loadUser());
     } catch (err) {

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Styles.css";
-import image from '../../assets/background.jpeg';
+
 
 
 import Tabs from "./component/Tabs";

@@ -6,8 +6,8 @@ import {
 } from './citizen.types';
 
 const initialState = {
-  citizen: [],
-  vaccineDates:[],
+  citizen: {},
+  vaccineDates:"",
   loading: true,
   error: {},
 };
@@ -17,12 +17,14 @@ export default function comments(state = initialState, action) {
     case GET_CITIZEN_DTLS:
       return {
         ...state,
+     
         citizen: action.payload,
         loading: false,
       };
       case GET_VACCINEDATE:
       return {
         ...state,
+     
         vaccineDates: action.payload,
         loading: false,
       };

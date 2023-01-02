@@ -4,12 +4,14 @@ import {
   GET_VACCINE_TYPE,
   CREATE_POST,
   GET_CITIZEN_DETAILS,
+  GET_staff_DETAILS
 } from "./manager.types";
 
 const initialState = {
   currentStats: [],
   vaccientType: [],
-  citizenDetails: {},
+  citizenDetails: [],
+  staff:[],
   loading: true,
   error: {},
 };
@@ -34,7 +36,12 @@ export default function comments(state = initialState, action) {
         citizenDetails: action.payload,
         loading: false,
       };
-
+      case GET_staff_DETAILS:
+        return {
+          ...state,
+          staff: action.payload,
+          loading: false,
+        };
     // case CITIZEN_ERROR:
     //   return {
     //     ...state,

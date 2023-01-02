@@ -4,27 +4,40 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
+import { Navigate } from "react-router-dom";
 
-const Citizen = () => {
+import { connect, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+
+import {
+    getDetails,getVacDate, CreateVacDate
+  } from "../redux/citizen/citizen.actions";
+
+const Citizen = ({getDetails,getVacDate, citizen, vaccineDate, CreateVacDate,isAuthenticated}) => {
     const [title, set_title] = useState("My details");
     const [data, set_data] = useState({});
+    const [tab1, setTab1] = useState(false);
+
+const id  = useSelector((state) => state.auth.id)
+
 
     const show_tab = (tab) => {
         set_title(tab);
-        try {
-            Axios.get("127.0.0.1/api/citizen/" + "test_id", data)
-                .then((response) => {
-                    if (response.status == 200) {
-                        set_data(response.data);
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
+        if(tab ==="My details") {
+            getDetails();
+            setTab1(true)
+        } else if(tab === "Next Vaccination data"){
+            setTab1(false)
+            getVacDate();
         }
     };
+
+    const handle_approve = () => {
+        const event = window.event;
+        event.preventDefault();
+        CreateVacDate({id});
+    };
+    if(!isAuthenticated) {  return <Navigate replace to={`/login`} />;}
 
     return (
         <>
@@ -43,9 +56,10 @@ const Citizen = () => {
                             <h1 className="text-white mt-8 ">My details</h1>
                         </div>
                     </div>
+            
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("Vaccination data")}
+                        onClick={() => show_tab("Next Vaccination data")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
@@ -53,7 +67,7 @@ const Citizen = () => {
                         ></img>
                         <div className="col-span-2">
                             <h1 className="text-white mt-8 ">
-                                Vaccination data
+                               Next Vaccination data
                             </h1>
                         </div>
                     </div>
@@ -63,11 +77,22 @@ const Citizen = () => {
                         <h1 className="text-white font-extrabold text-3xl">
                             {title}
                         </h1>
-                        <JsonToTable json={data} />
-                        <div className="grid grid-cols-2 gap-4">
-                            <div></div>
+                        {citizen && tab1  &&    <JsonToTable json={citizen} /> }
+                        {vaccineDate && !tab1 &&   <> <div className="grid grid-cols-2 gap-4">
+                            <div> Vaccinated Date - {vaccineDate}</div>
                             <div></div>
                         </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <Button
+                                    text=" Change Vaccinate Date"
+                                    handle_click={handle_approve}
+                                ></Button>
+                            </div>
+                        </div>
+                        </> 
+                         }
+                    
                     </div>
                 </div>
             </div>
@@ -75,4 +100,16 @@ const Citizen = () => {
     );
 };
 
-export default Citizen;
+const mapStateToProps = (state) => ({
+    dt: console.log(state),
+    citizen: state.citizen.citizen,
+    vaccineDate: state.citizen.vaccineDates,
+    isAuthenticated: state.auth.isAuthenticated
+  });
+  
+  
+  export default connect(mapStateToProps, {
+    getDetails, getVacDate, CreateVacDate
+  })(Citizen);
+  
+

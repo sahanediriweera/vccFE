@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  ADMIN_LOGIN_SUCCESS,
   DOC_REGISTER_SUCCESS,
   DOC_LOGIN_SUCCESS,
 
@@ -19,8 +20,8 @@ import {
 } from './auth.types';
  
 const initialState = {
-  token: localStorage.getItem('token'),
   isAuthenticated: null,
+  id: "",
   loading: true,
   user: null,
 };
@@ -38,15 +39,18 @@ export default function auth(state = initialState, action) {
       };
 
     case ADMIN_REG_SUCCESS:
+    case  STAFF_REG_SUCCESS:
+    case  MANAGER_REG_SUCCESS:
+    case  CITIZEN_REG_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem("role", action.payload.role)
+      // localStorage.setItem('token', action.payload.token);
+      // localStorage.setItem("role", action.payload.role)
       return {
         ...state,
         ...action.payload,
         isAuthenticated: true,
         loading: false,
-        role: action.payload.role
+        id: action.payload,
       };
       
     //   case DOC_REGISTER_SUCCESS:

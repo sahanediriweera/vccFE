@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { connect } from "react-redux";
 
-
-function Header(props) {
+function Header({isAuthenticated}) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -27,12 +27,21 @@ function Header(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color ="CaptionText">
             COVID-19 VACCINATION MANAGEMENT SYSTEM 
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign Up</Button>
+          {isAuthenticated? <> <Button color="inherit">Log Out</Button></>: <>          <Button color="inherit">Login</Button>
+          <Button color="inherit">Sign Up</Button></>}
+
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+ isAuthenticated: state.auth.isAuthenticated
+});
+
+
+export default connect(mapStateToProps, {
+})(Header);
+
+

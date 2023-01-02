@@ -1,4 +1,4 @@
-export { default as Home } from "./login";
+export { default as Home } from "../Components/Home/App";
 export { default as Login } from "./login";
 export { default as Register } from "./register";
 export { default as Manager } from "./manager";

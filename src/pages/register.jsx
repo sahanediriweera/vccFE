@@ -3,7 +3,7 @@ import { Button, Input } from "../Components/common/ui";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
-
+import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -19,6 +19,7 @@ const Register = ({
   registerCitizen,
   registerManager,
   registerStaff,
+  isAuthenticated
 }) => {
   const input_data_structure = {
     name: {
@@ -65,6 +66,8 @@ const Register = ({
     },
   };
 
+ 
+
   const [inputs, set_inputs] = useState(input_data_structure);
   const [role, set_role] = useState("manager");
 
@@ -76,6 +79,7 @@ const Register = ({
     let input_list = { ...inputs };
     input_list[input.key] = input;
     set_inputs(input_list);
+    console.log(inputs)
   };
 
   const handle_submit = async () => {
@@ -84,9 +88,9 @@ const Register = ({
     const data = {
       name: inputs.name.value,
       email: inputs.email.value,
-      nic: inputs.nic.value,
+      citizenID: inputs.nic.value,
       password: inputs.password.value,
-      password_conf: inputs.password_conf.value,
+      confirmPassword: inputs.password_conf.value,
     };
     if (role === "manager") {
       registerManager(data);
@@ -115,6 +119,7 @@ const Register = ({
     //     toast.error(e);
     // }
   };
+  if(isAuthenticated) {  return <Navigate replace to={`/home`} />;}
 
   return (
     <>
@@ -203,12 +208,13 @@ const Register = ({
 
 const mapStateToProps = (state) => ({
   dt: console.log(state),
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 
 export default connect(mapStateToProps, {
   registerAdmin,
-//   registerCitizen,
-//   registerManager,
-//   registerStaff,
+  registerCitizen,
+  registerManager,
+  registerStaff,
 })(Register);

@@ -5,7 +5,15 @@ import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
 
-const Admin = () => {
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import {
+    getManagers,  getStaff , getAdmin, getRealAdmin
+  } from "../redux/admin/admin.actions";
+
+const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, admins, realAdmins, staff}) => {
     const input_data_structure = {
         delete_id: {
             key: "delete_id",
@@ -27,8 +35,10 @@ const Admin = () => {
     };
 
     const [inputs, set_inputs] = useState(input_data_structure);
-    const [title, set_title] = useState("citizen");
+    const [title, set_title] = useState("");
+    const [tab, setTab] = useState(0)
     const [data, set_data] = useState({});
+    const [myJson, setMyJson] = useState([])
 
     const handle_change = (e, input) => {
         input.value = e.target.value;
@@ -43,48 +53,25 @@ const Admin = () => {
     const handle_submit = async () => {
         const event = window.event;
         event.preventDefault();
-        const data = {
-            name: inputs.name.value,
-            email: inputs.email.value,
-            nic: inputs.nic.value,
-            password: inputs.password.value,
-            password_conf: inputs.password_conf.value,
-        };
-
-        try {
-            Axios.post("127.0.0.1/api/Signup/", data)
-                .then((response) => {
-                    if (response.status == 200) {
-                        const user_data = {
-                            token: response.data.result.token,
-                        };
-
-                        toast.success("Registered successfully!");
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
-        }
+        
     };
 
-    const show_tab = (tab) => {
-        set_title(tab);
-        try {
-            Axios.post("127.0.0.1/api/Signup/", data)
-                .then((response) => {
-                    if (response.status == 200) {
-                        set_data(response.data.result.data);
-                    }
-                })
-                .catch((e) => {
-                    toast.error(e);
-                });
-        } catch (e) {
-            toast.error(e);
+    const show_tab = (tab = "managers") => {
+        set_title(tab)
+        if(tab === 'staff'){
+            setTab(1)
+            getStaff()
+        }else if (tab === "admin"){
+            setTab(2)
+            getAdmin()
+        } else if (tab === "realAdmins") {
+            setTab(3)
+          getRealAdmin();
+        } else if(tab === "managers") {
+            setTab(4)
+           getManagers();
         }
+       
     };
 
     const handle_delete = () => {
@@ -127,16 +114,16 @@ const Admin = () => {
         }
     };
 
-    const myJson = {
-        Sponsors: [
-            { name: "john", email: "john@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-            { name: "jane", email: "jane@@xyz.com" },
-        ],
-    };
+    // const myJson = {
+    //     Sponsors: [
+    //         { name: "john", email: "john@@xyz.com" },
+    //         { name: "jane", email: "jane@@xyz.com" },
+    //         { name: "jane", email: "jane@@xyz.com" },
+    //         { name: "jane", email: "jane@@xyz.com" },
+    //         { name: "jane", email: "jane@@xyz.com" },
+    //         { name: "jane", email: "jane@@xyz.com" },
+    //     ],
+    // };
 
     return (
         <>
@@ -145,14 +132,14 @@ const Admin = () => {
                 <div className="col-span-2">
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("citizen")}
+                        onClick={() => show_tab("realAdmins")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
                             src="/assets/Rectangle36.png"
                         ></img>
                         <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Citizens</h1>
+                            <h1 className="text-white mt-8 ">Real Admin</h1>
                         </div>
                     </div>
                     <div
@@ -181,14 +168,14 @@ const Admin = () => {
                     </div>
                     <div
                         className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-                        onClick={() => show_tab("programms")}
+                        onClick={() => show_tab("managers")}
                     >
                         <img
                             className="w-[70px] h-auto m-auto mt-[15px]"
                             src="/assets/Rectangle36.png"
                         ></img>
                         <div className="col-span-2">
-                            <h1 className="text-white mt-8 ">Programms</h1>
+                            <h1 className="text-white mt-8 ">Managers</h1>
                         </div>
                     </div>
                 </div>
@@ -197,15 +184,13 @@ const Admin = () => {
                         <h1 className="text-white font-extrabold text-3xl">
                             {title}
                         </h1>
-                        <JsonToTable json={myJson} />
+                        {tab === 4 && managers  &&    <JsonToTable json={managers} /> }
+                        {tab === 2&& admins  &&    <JsonToTable json={admins} /> }
+                        {tab === 3  && realAdmins  &&    <JsonToTable json={realAdmins} /> }
+                        {tab === 1 && staff  &&    <JsonToTable json={staff} /> }
+
+                     
                         <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <Input input={inputs.delete_id}></Input>
-                                <Button
-                                    text="Delete"
-                                    handle_click={handle_delete}
-                                ></Button>
-                            </div>
                             <div>
                                 <Input input={inputs.approve_id}></Input>
                                 <Button
@@ -221,4 +206,23 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+// Admin.propTypes = {
+//   login: PropTypes.func.isRequired,
+//   isAuthenticated: PropTypes.bool,
+// };
+
+const mapStateToProps = (state) => ({
+    dt: console.log(state),
+    managers: state.admin.managers,
+    admins: state.admin.admin,
+    realAdmins: state.admin.realAdmin,
+    staff: state.admin.staff
+
+  });
+  
+  
+  export default connect(mapStateToProps, {
+    getManagers,  getStaff , getAdmin, getRealAdmin
+  })(Admin);
+  
+

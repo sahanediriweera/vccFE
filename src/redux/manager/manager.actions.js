@@ -1,13 +1,16 @@
 import { setAlert } from "../alert/alert.actions";
+
+import { BASE_URL } from "../../api/url";
 import {
   CREATE_PROGRAM,
   GET_STATISTICS,
   GET_VACCINE_TYPE,
   CREATE_POST,
-  GET_CITIZEN_DETAILS
+  GET_CITIZEN_DETAILS,
+  GET_staff_DETAILS
 } from "./manager.types";
 
-// import { allCommentsData, createSingleComment, deleteSingleComment } from "../../api/commentsApi";
+import axios from "axios";
 
 export const getStats = () => async (dispatch) => {
   try {
@@ -57,7 +60,7 @@ export const CreateProgram = ({citizenIDs, location, staffIds, vaccineIds, date,
   }
 };
 
-export const getVaccineType = () => async (dispatch) => {
+export const getVaccineType = (batchType) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -66,11 +69,11 @@ export const getVaccineType = () => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Manager/vaccinetypebatches`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Manager/vaccinetypebatches?vaccinetype=${batchType}`,config_headers);
 
     dispatch({
       type: GET_VACCINE_TYPE,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // dispatch({
@@ -119,7 +122,30 @@ export const getCitizenDetails = () => async (dispatch) => {
 
     dispatch({
       type: GET_CITIZEN_DETAILS,
-      payload: res,
+      payload: res.data,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: COMMENT_ERROR,
+    //   payload: { msg: err.response.statusText, status: err.response.status },
+    // });
+  }
+};
+
+export const getstaff = () => async (dispatch) => {
+  try {
+    const config_headers = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+      },
+    };
+    const res = await axios.get(`${BASE_URL}/Manager/getstaff`,config_headers);
+
+    dispatch({
+      type: GET_staff_DETAILS,
+      payload: res.data,
     });
   } catch (err) {
     // dispatch({

@@ -5,7 +5,6 @@ import Home from "../Components/Home/App";
 function App() {
     return (
         <div className="App">
-            <Header />
             <Home />
         </div>
     );

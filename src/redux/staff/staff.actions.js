@@ -10,10 +10,10 @@ import {
 
 } from "./staff.types";
 
-// import {  deleteSingleAnswer } from "../../api/answersApi";
-// import { createSingleAnswer, allAnswersData } from "../../api/urls";
+import { BASE_URL } from "../../api/url";
 
-export const getNexProgram = (staffID) => async (dispatch) => {
+
+export const getNexProgram = ({staffID}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -46,10 +46,12 @@ export const GetPatient = (patientguid) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Staff/GetPatientDetails`,patientguid,config_headers);
+   const id = patientguid.patientGuid
+   console.log(patientguid)
+    const res = await axios.get(`${BASE_URL}/Staff/GetPatientDetails?patientguid=${patientguid}`,config_headers);
     dispatch({
       type: GET_PATIENT,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // console.log(err)

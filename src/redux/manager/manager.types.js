@@ -3,6 +3,7 @@ export const GET_STATISTICS = 'GET_STATISTICS';
 export const GET_VACCINE_TYPE = 'GET_VACCINE_TYPE';
 export const CREATE_POST = 'CREATE_POST';
 export const GET_CITIZEN_DETAILS = 'GET_CITIZEN_DETAILS';
+export const GET_staff_DETAILS = 'GET_staff_DETAILS';
 
 
 

@@ -5,7 +5,8 @@ import {
   GET_VACCINEDATE,
   CITIZEN_ERROR
 } from "./citizen.types";
-import { allCommentsData, createSingleComment, deleteSingleComment } from "../../api/commentsApi";
+import axios from "axios";
+import { BASE_URL } from "../../api/url";
 
 export const getDetails = (id) => async (dispatch) => {
   try {
@@ -16,11 +17,12 @@ export const getDetails = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Citizen/GetDetails`,id,config_headers);
+
+    const res = await axios.post(`${BASE_URL}/Citizen/GetDetails/`, {id: "ACCB190F-F761-406F-0C82-08DAE4B2F906"},  config_headers);
 
     dispatch({
       type: GET_CITIZEN_DTLS,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // dispatch({
@@ -30,7 +32,7 @@ export const getDetails = (id) => async (dispatch) => {
   }
 };
 
-export const CreateVacDate = (id) => async (dispatch) => {
+export const CreateVacDate = ({id}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -39,7 +41,9 @@ export const CreateVacDate = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Citizen/ChangeVaccineDate`,id,config_headers);
+    const body = JSON.stringify({ id });
+
+    const res = await axios.post(`${BASE_URL}/Citizen/ChangeVaccineDate`,body,config_headers);
 
     dispatch({
       type: POST_VACCINEDATE,
@@ -62,11 +66,13 @@ export const getVacDate = (no) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Citizen/GetDetails`,no,config_headers);
+    const res = await axios.post(`${BASE_URL}/Citizen/GetVaccineDate`,{
+      id: "ACCB190F-F761-406F-0C82-08DAE4B2F906"
+    },config_headers);
 
     dispatch({
       type: GET_VACCINEDATE,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // dispatch({

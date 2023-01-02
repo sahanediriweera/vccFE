@@ -25,10 +25,10 @@ export const getManagers = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/manager`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/managers`,config_headers);
     dispatch({
-      type: GET_ANSWERS,
-      payload: res,
+      type: GET_MANAGERS,
+      payload: res.data,
     });
   } catch (err) {
     // console.log(err)
@@ -77,7 +77,7 @@ export const getStaff = (id) => async (dispatch) => {
     const res = await axios.get(`${BASE_URL}/Admin/staff`,config_headers);
     dispatch({
       type: GET_STAFF,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // console.log(err)
@@ -125,7 +125,7 @@ export const getAdmin = () => async (dispatch) => {
     const res = await axios.get(`${BASE_URL}/Admin/admin`,config_headers);
     dispatch({
       type: GET_ADMIN,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
     // console.log(err)
@@ -201,15 +201,14 @@ export const getRealAdmin = () => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/realAdmin`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/realAdmins`,config_headers);
     dispatch({
       type: GET_REALADMIN,
-      payload: res,
+      payload: res.data,
     });
   } catch (err) {
-    // console.log(err)
+    console.log(err)
     // dispatch({
-      
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
     // });
@@ -243,57 +242,3 @@ export const CreateRealAdmin = ({superAdminGuid, adminGuid}) => async (dispatch)
     // });
   }
 };
-
-// // Add Answer
-// export const addAnswer = ({postId, formBody, userId, userName}) => async (dispatch) => {
-//   try {
-//     console.log(postId, formBody, userId)
-//     const body = JSON.stringify({ postId, formBody, userId, userName });
-
-//     const config_headers = {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json",
-//       },
-//     };
-//     const res = await axios.post(createSingleAnswer, body, config_headers);
-
-//     dispatch({
-//       type: ADD_ANSWER,
-//       payload: res.data,
-//     });
-
-//     dispatch(setAlert(res.data.msg, "success"));
-
-//     dispatch(getAnswers(postId));
-//   } catch (err) {
-//     console.log(err)
-//     dispatch(setAlert(err.response.data.msg, "danger"));
-
-//     dispatch({
-//       type: ANSWER_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     });
-//   }
-// };
-
-// // Delete Answer
-// export const deleteAnswer = (AnswerId) => async (dispatch) => {
-//   try {
-//     const res = await deleteSingleAnswer(AnswerId);
-
-//     dispatch({
-//       type: DELETE_ANSWER,
-//       payload: AnswerId,
-//     });
-
-//     dispatch(setAlert(res.data.message, "success"));
-//   } catch (err) {
-//     dispatch(setAlert(err.response.data.message, "danger"));
-
-//     dispatch({
-//       type: ANSWER_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     });
-//   }
-// };

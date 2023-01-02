@@ -43,7 +43,7 @@ export default function answers(state = initialState, action) {
     case GET_REALADMIN:
       return {
         ...state,
-        error: action.payload,
+        realAdmin: action.payload,
         loading: false,
       };
       case ADMIN_ERROR:
