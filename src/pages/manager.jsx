@@ -11,10 +11,10 @@ import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
-    getCitizenDetails, getstaff, getVaccineType
+    getCitizenDetails, getstaff, getVaccineType,CreateProgram
 } from "../redux/manager/manager.actions";
 
-const Manager = ({ getVaccineType, getCitizenDetails, citizen, getstaff, staff, vaccinetype, isAuthenticated }) => {
+const Manager = ({ getVaccineType, getCitizenDetails, citizen, getstaff, staff, vaccinetype, isAuthenticated, CreateProgram }) => {
 
     const id = useSelector((state) => state.auth.id)
 
@@ -85,12 +85,13 @@ const Manager = ({ getVaccineType, getCitizenDetails, citizen, getstaff, staff, 
         }
     };
 
-    // const handle_approve = () => {
-    //     const event = window.event;
-    //     event.preventDefault();
-    //     CreateVacDate({id});
-    // };
+    const handle_create = () => {
+        const event = window.event;
+        event.preventDefault();
+        CreateProgram(addData);
+    };
     if(!isAuthenticated) {  return <Navigate replace to={`/login`} />;}
+
     return (
         <>
             <ToastContainer />
@@ -203,6 +204,7 @@ const Manager = ({ getVaccineType, getCitizenDetails, citizen, getstaff, staff, 
                         <label> Date</label>
                         <input
                             input={addData.date}
+                            id="date"
                             onChange={handle_change}
                         />
                           <label> Vaccine Id</label>
@@ -211,9 +213,8 @@ const Manager = ({ getVaccineType, getCitizenDetails, citizen, getstaff, staff, 
                             id="vaccineIDs"
                             onChange={handle_change}
                         />
-                           <Button text="Create Program" 
-                           
-                        //    handle_click={handle_submit} 
+                           <Button text="Create Program"  
+                           handle_click={handle_create} 
                            />
                     </div> }
                     </div>
@@ -236,7 +237,7 @@ const mapStateToProps = (state) => ({
 
 
 export default connect(mapStateToProps, {
-    getCitizenDetails, getstaff, getVaccineType
+    getCitizenDetails, getstaff, getVaccineType, CreateProgram
 })(Manager);
 
 

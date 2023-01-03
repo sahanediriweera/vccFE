@@ -70,6 +70,8 @@ export default function auth(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT:
       localStorage.removeItem('main-root');
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
       return {
         state
       };

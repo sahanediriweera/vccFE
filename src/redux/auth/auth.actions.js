@@ -160,6 +160,7 @@ export const adminLogin =
       const body = JSON.stringify({ email, password });
 
       const res = await axios.post(`${BASE_URL}/Login/admin`, body, config_headers);
+      localStorage.setItem("role", "admin")
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -190,6 +191,7 @@ export const adminLogin =
       const body = JSON.stringify({ email, password });
 
       const res = await axios.post(`${BASE_URL}/Login/manager`, body, config_headers);
+      localStorage.setItem("role", "manager")
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -225,6 +227,7 @@ export const adminLogin =
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+      localStorage.setItem("role", "staff")
 
       // dispatch(setAlert(res.data.msg, "success"));
 
@@ -250,12 +253,13 @@ export const adminLogin =
       const body = JSON.stringify({ email, password });
 
       const res = await axios.post(`${BASE_URL}/Login/citizen`, body, config_headers);
+      
 
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-
+      localStorage.setItem("role", "citizen")
       // dispatch(setAlert(res.data.msg, "success"));
 
       // dispatch(loadUser());
@@ -267,4 +271,17 @@ export const adminLogin =
     }
   };
 
+
+  export const logOut = () =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: LOGOUT,
+      });
+      // dispatch(setAlert(res.data.msg, "success"));
+      // dispatch(loadUser());
+    } catch (err) {
+      dispatch(setAlert(err.response.data.msg, "danger"));
+    }
+  };
 

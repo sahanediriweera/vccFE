@@ -4,16 +4,17 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import Axios from "axios";
 import { JsonToTable } from "react-json-to-table";
+import { Navigate } from "react-router-dom";
 
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
-    getManagers,  getStaff , getAdmin, getRealAdmin
-  } from "../redux/admin/admin.actions";
+    getManagers, getStaff, getAdmin, getRealAdmin, CreateRealAdmin, CreateAdmin,CreateManagers,CreateStaff
+} from "../redux/admin/admin.actions";
 
-const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, admins, realAdmins, staff}) => {
+const Admin = ({ isAuthenticated, getManagers, getStaff, getAdmin, getRealAdmin, managers, admins, realAdmins, staff,CreateRealAdmin, CreateAdmin,CreateManagers,CreateStaff }) => {
     const input_data_structure = {
         delete_id: {
             key: "delete_id",
@@ -34,8 +35,11 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
         },
     };
 
+    const auth = useSelector((state) => state.auth )
+
     const [inputs, set_inputs] = useState(input_data_structure);
-    const [title, set_title] = useState("");
+    const [requestData, setData] = useState();
+    const [title, set_title] =useState("");
     const [tab, setTab] = useState(0)
     const [data, set_data] = useState({});
     const [myJson, setMyJson] = useState([])
@@ -53,25 +57,27 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
     const handle_submit = async () => {
         const event = window.event;
         event.preventDefault();
-        
+
     };
 
-    const show_tab = (tab = "managers") => {
+    const show_tab = (tab) => {
         set_title(tab)
-        if(tab === 'staff'){
+        if (tab === 'staff') {
             setTab(1)
             getStaff()
-        }else if (tab === "admin"){
+        } else if (tab === "admin") {
             setTab(2)
             getAdmin()
         } else if (tab === "realAdmins") {
             setTab(3)
-          getRealAdmin();
-        } else if(tab === "managers") {
+            getRealAdmin();
+        } else if (tab === "managers") {
             setTab(4)
-           getManagers();
+            getManagers();
+        } else if(tab === "removePro"){
+            setTab(5);
         }
-       
+
     };
 
     const handle_delete = () => {
@@ -124,6 +130,7 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
     //         { name: "jane", email: "jane@@xyz.com" },
     //     ],
     // };
+    if(!isAuthenticated) {  return <Navigate replace to={`/login`} />;}
 
     return (
         <>
@@ -178,19 +185,103 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
                             <h1 className="text-white mt-8 ">Managers</h1>
                         </div>
                     </div>
+                    <div
+                        className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
+                        onClick={() => show_tab("Remove Program")}
+                    >
+                        <img
+                            className="w-[70px] h-auto m-auto mt-[15px]"
+                            src="/assets/Rectangle36.png"
+                        ></img>
+                        <div className="col-span-2">
+                            <h1 className="text-white mt-8 ">Remove Program </h1>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-span-10 bg-[#0131B7] rounded-l-[50px]">
                     <div className="mt-[50px] ml-20 w-[80%]">
                         <h1 className="text-white font-extrabold text-3xl">
                             {title}
                         </h1>
-                        {tab === 4 && managers  &&    <JsonToTable json={managers} /> }
-                        {tab === 2&& admins  &&    <JsonToTable json={admins} /> }
-                        {tab === 3  && realAdmins  &&    <JsonToTable json={realAdmins} /> }
-                        {tab === 1 && staff  &&    <JsonToTable json={staff} /> }
+                        {tab === 4 && managers && <>  <JsonToTable json={managers} />
 
-                     
-                        <div className="grid grid-cols-2 gap-4">
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                <input className="mt-[50px] ml-20 w-[80%]" onChange={(e) => setData(e.target.value)}></input>
+                            <Button
+                                text="Approve Manager"
+                            handle_click={(e) => {
+                                    e.preventDefault();
+                                    CreateManagers({
+                                        id: requestData,
+                                    })
+                                    setData("")
+
+                            }}
+                            ></Button>
+                                </div>
+                            </div>
+
+
+                        </>}
+                        {tab === 2 && admins && <> <JsonToTable json={admins} />     <div className="grid grid-cols-2 gap-4">
+                            <div>
+                            <input className="mt-[50px] ml-20 w-[80%]" onChange={(e) => setData(e.target.value)}></input>
+                            <Button
+                                text="Create Admin"
+                            handle_click={(e) => {
+                                    e.preventDefault();
+                                    CreateAdmin({
+                                        superAdmin: auth.id,
+                                        userAdmin: requestData
+                                    })
+                                    setData("")
+
+                            }}
+                            ></Button>
+                            </div>
+                        </div> </>}
+                        {tab === 3 && realAdmins && <> <JsonToTable json={realAdmins} />   <div>
+                            <input className="mt-[50px] ml-20 w-[80%]" onChange={(e) => setData(e.target.value)}></input>
+                            <Button
+                                text="Create Super Admin"
+                            handle_click={(e) => {
+                                    e.preventDefault();
+                                    CreateRealAdmin({
+                                        superAdminGuid: auth.id,
+                                        adminGuid: requestData
+                                    })
+                                    setData("");
+
+                            }}
+                            ></Button>
+                        </div> </>}
+                        {tab === 5 && <>  <div>
+                            <input className="mt-[50px] ml-20 w-[80%]" onChange={(e) => setData(e.target.value)}></input>
+                            <Button
+                                text="Remove Program"
+                            
+                            ></Button>
+                        </div> </>}
+                        {tab === 1 && staff && <><JsonToTable json={staff} /> <div>
+                        <input className="mt-[50px] ml-20 w-[80%]" onChange={(e) => setData(e.target.value)}></input>
+                            <Button
+                                text="Approve Staff"
+                            handle_click={(e) => {
+                                    e.preventDefault();
+                                    CreateStaff({
+                                        id: requestData,
+                                        
+                                    });
+                                    setData("");
+
+                            }}
+                            ></Button>
+                        </div></>}
+
+
+                        {/* <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <Input input={inputs.approve_id}></Input>
                                 <Button
@@ -198,7 +289,7 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
                                     handle_click={handle_approve}
                                 ></Button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -212,17 +303,17 @@ const Admin = ({  getManagers,  getStaff , getAdmin, getRealAdmin, managers, adm
 // };
 
 const mapStateToProps = (state) => ({
-    dt: console.log(state),
+    isAuthenticated: state.auth.isAuthenticated,
     managers: state.admin.managers,
     admins: state.admin.admin,
     realAdmins: state.admin.realAdmin,
     staff: state.admin.staff
 
-  });
-  
-  
-  export default connect(mapStateToProps, {
-    getManagers,  getStaff , getAdmin, getRealAdmin
-  })(Admin);
-  
+});
+
+
+export default connect(mapStateToProps, {
+    getManagers, getStaff, getAdmin, getRealAdmin,CreateRealAdmin,CreateAdmin, CreateManagers, CreateStaff
+})(Admin);
+
 

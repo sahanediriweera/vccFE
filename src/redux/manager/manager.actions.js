@@ -35,7 +35,7 @@ export const getStats = () => async (dispatch) => {
   }
 };
 
-export const CreateProgram = ({citizenIDs, location, staffIds, vaccineIds, date, managerId}) => async (dispatch) => {
+export const CreateProgram = ({citizenIDs, location, staffIds, vaccineIDs, date, managerId}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -44,7 +44,7 @@ export const CreateProgram = ({citizenIDs, location, staffIds, vaccineIds, date,
         Accept: "application/json",
       },
     };
-    const body = JSON.stringify({citizenIDs, location, staffIds, vaccineIds, date, managerId});
+    const body = JSON.stringify({citizenIDs, location, staffIds, vaccineIDs, date, managerId});
 
     const res = await axios.post(`${BASE_URL}/Manager/createprogram`,body,config_headers);
 

@@ -19,6 +19,7 @@ import {
 
 
 const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated}) => {
+    const role = localStorage.getItem("role")
 
 
     const input_data_structure = {
@@ -29,10 +30,11 @@ const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated
             is_valid: true,
             error: "",
             list_items: [
-                { key: 0, id: "citizen", title: "citizen" },
-                { key: 1, id: "staff", title: "staff" },
-                { key: 2, id: "manager", title: "manager" },
-                { key: 3, id: "administrator", title: "administrator" },
+                { key: 0, id: "", title: "" },
+                { key: 1, id: "citizen", title: "citizen" },
+                { key: 2, id: "staff", title: "staff" },
+                { key: 3, id: "manager", title: "manager" },
+                { key: 4, id: "administrator", title: "administrator" },
             ],
         },
         email: {
@@ -57,7 +59,7 @@ const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated
     const [inputs, set_inputs] = useState(input_data_structure);
 
     const handle_change = (e, input) => {
-        input.value = e.target.value;
+        input.value = e.target.value ;
         input.is_valid = e.target.value ? true : false;
         input.error = e.target.value ? "" : "Please input the password";
         let input_list = { ...inputs };
@@ -90,6 +92,8 @@ const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated
             staffLogin(data);
           }
 
+
+
      
       
 
@@ -119,8 +123,20 @@ const Login = ({adminLogin,citizenLogin,staffLogin,managerLogin, isAuthenticated
         //     toast.error(e);
         // }
     };
+    if(role === "citizen"){
+        return <Navigate replace to={`/citizen`} />
+      } else if (role === "staff"){
+        return <Navigate replace to={`/staff`} />
+        
+      } else if (role === "manager"){
+        return <Navigate replace to={`/manager`} />
 
-    if(isAuthenticated) {  return <Navigate replace to={`/home`} />;}
+      } else if(role === "admin") {
+        return <Navigate replace to={`/admin`} />
+
+      }
+
+    // if(isAuthenticated) {  return <Navigate replace to={`/home`} />;}
     return (
         <>
             <ToastContainer />

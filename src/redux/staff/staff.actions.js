@@ -125,8 +125,8 @@ export const UpdateVaccinationBatch = ({type, expirationDate, producedDate, coun
     };
 
     const body = JSON.stringify({type, expirationDate, producedDate, count, batchId });
-
-    const res = await axios.post(`${BASE_URL}/Staff/CreareVaccineBatch`,body,config_headers);
+console.log(body)
+    const res = await axios.post(`${BASE_URL}/Staff/CreateVaccineBatch`,body,config_headers);
     dispatch({
       type: CREATE_VACCINE_TYPE,
       payload: res,
@@ -153,7 +153,7 @@ export const CreateVaccineAdd = ({id, vaccineProgramID}) => async (dispatch) => 
 
     const body = JSON.stringify({id, vaccineProgramID});
 
-    const res = await axios.post(`${BASE_URL}/Staff/citizenvaccinedadd`,body,config_headers);
+    const res = await axios.post(`${BASE_URL}/Staff/citizenvaccineadd`,body,config_headers);
     dispatch({
       type: ADD_VACCINE,
       payload: res,

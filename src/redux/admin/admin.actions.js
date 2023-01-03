@@ -40,7 +40,7 @@ export const getManagers = (id) => async (dispatch) => {
   }
 };
 
-export const CreateManagers = ({managerId}) => async (dispatch) => {
+export const CreateManagers = ({id}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -49,7 +49,8 @@ export const CreateManagers = ({managerId}) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Admin/manager`,config_headers);
+    const body = JSON.stringify({id});
+    const res = await axios.post(`${BASE_URL}/Admin/managers`, body ,config_headers);
     dispatch({
       type: CREATE_MANAGERS,
       payload: res,
@@ -89,7 +90,7 @@ export const getStaff = (id) => async (dispatch) => {
   }
 };
 
-export const CreateStaff = ({managerId}) => async (dispatch) => {
+export const CreateStaff = ({id}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -98,7 +99,10 @@ export const CreateStaff = ({managerId}) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Admin/staff`,config_headers);
+
+    const body = JSON.stringify({id});
+
+    const res = await axios.post(`${BASE_URL}/Admin/staff`,body,config_headers);
     dispatch({
       type: CREATE_STAFF,
       payload: res,
@@ -137,7 +141,7 @@ export const getAdmin = () => async (dispatch) => {
   }
 };
 
-export const CreateAdmin = (superAdmin, userAdmin) => async (dispatch) => {
+export const CreateAdmin = ({superAdmin, userAdmin}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -165,7 +169,7 @@ export const CreateAdmin = (superAdmin, userAdmin) => async (dispatch) => {
 };
 
 
-export const DeleteProgram = (superAdmin, userAdmin) => async (dispatch) => {
+export const DeleteProgram = ({superAdmin, userAdmin}) => async (dispatch) => {
   try {
     const config_headers = {
       headers: {
@@ -227,6 +231,7 @@ export const CreateRealAdmin = ({superAdminGuid, adminGuid}) => async (dispatch)
     };
 
     const body = JSON.stringify({superAdminGuid, adminGuid});
+   
 
     const res = await axios.post(`${BASE_URL}/Admin/realAdminguid`,body,config_headers);
     dispatch({
