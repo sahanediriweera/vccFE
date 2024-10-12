@@ -28,7 +28,7 @@ const id  = useSelector((state) => state.auth.id)
             setTab1(true)
         } else if(tab === "Next Vaccination data"){
             setTab1(false)
-            getVacDate();
+            getVacDate(id);
         }
     };
 

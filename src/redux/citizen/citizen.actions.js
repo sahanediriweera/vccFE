@@ -65,9 +65,7 @@ export const getVacDate = (no) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.post(`${BASE_URL}/Citizen/GetVaccineDate`,{
-      id: "ACCB190F-F761-406F-0C82-08DAE4B2F906"
-    },config_headers);
+    const res = await axios.get(`${BASE_URL}/Citizen/GetVaccineDate/${no}`,config_headers);
 
     dispatch({
       type: GET_VACCINEDATE,
