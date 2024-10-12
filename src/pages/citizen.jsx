@@ -24,7 +24,7 @@ const id  = useSelector((state) => state.auth.id)
     const show_tab = (tab) => {
         set_title(tab);
         if(tab ==="My details") {
-            getDetails();
+            getDetails(id);
             setTab1(true)
         } else if(tab === "Next Vaccination data"){
             setTab1(false)

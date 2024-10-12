@@ -1,9 +1,7 @@
-import { setAlert } from "../alert/alert.actions";
 import {
   GET_CITIZEN_DTLS,
   POST_VACCINEDATE,
   GET_VACCINEDATE,
-  CITIZEN_ERROR
 } from "./citizen.types";
 import axios from "axios";
 import { BASE_URL } from "../../api/url";
@@ -18,13 +16,14 @@ export const getDetails = (id) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post(`${BASE_URL}/Citizen/GetDetails/`, {id: "ACCB190F-F761-406F-0C82-08DAE4B2F906"},  config_headers);
+    const res = await axios.get(`${BASE_URL}/Citizen/GetDetails/${id}`,  config_headers);
 
     dispatch({
       type: GET_CITIZEN_DTLS,
       payload: res.data,
     });
   } catch (err) {
+    console.log(err);
     // dispatch({
     //   type: COMMENT_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
