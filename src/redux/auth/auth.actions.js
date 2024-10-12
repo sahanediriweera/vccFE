@@ -12,35 +12,42 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-
-
   DOC_LOGIN_SUCCESS,
   ADMIN_REG_SUCCESS,
   STAFF_REG_SUCCESS,
   MANAGER_REG_SUCCESS,
-  CITIZEN_REG_SUCCESS
-
+  CITIZEN_REG_SUCCESS,
 } from "./auth.types";
 
 import { SET_ALERT } from "../alert/alert.types";
 import { BASE_URL } from "../../api/url";
 
-  //Register
-  export const registerAdmin =
+//Register
+export const registerAdmin =
   ({ name, phoneNumber, email, password, confirmPassword, citizenID }) =>
   async (dispatch) => {
-
-    console.log(name, phoneNumber, email, password, confirmPassword, citizenID)
+    console.log(name, phoneNumber, email, password, confirmPassword, citizenID);
     try {
-      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenID });
+      const body = JSON.stringify({
+        name,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword,
+        citizenID,
+      });
 
       const config_headers = {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      };  
-      const res = await axios.post(`${BASE_URL}/SignUp/admin`, body, config_headers);
+      };
+      const res = await axios.post(
+        `${BASE_URL}/SignUp/admin`,
+        body,
+        config_headers
+      );
       dispatch({
         type: ADMIN_REG_SUCCESS,
         payload: res,
@@ -57,19 +64,30 @@ import { BASE_URL } from "../../api/url";
     }
   };
 
-  export const registerStaff =
+export const registerStaff =
   ({ name, phoneNumber, email, password, confirmPassword, citizenID }) =>
   async (dispatch) => {
     try {
-      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenID });
+      const body = JSON.stringify({
+        name,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword,
+        citizenID,
+      });
 
       const config_headers = {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      };  
-      const res = await axios.post(`${BASE_URL}/SignUp/staff`, body, config_headers);
+      };
+      const res = await axios.post(
+        `${BASE_URL}/SignUp/staff`,
+        body,
+        config_headers
+      );
       dispatch({
         type: STAFF_REG_SUCCESS,
         payload: res,
@@ -85,19 +103,30 @@ import { BASE_URL } from "../../api/url";
       });
     }
   };
-  export const registerManager =
+export const registerManager =
   ({ name, phoneNumber, email, password, confirmPassword, citizenID }) =>
   async (dispatch) => {
     try {
-      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenID });
+      const body = JSON.stringify({
+        name,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword,
+        citizenID,
+      });
 
       const config_headers = {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      };  
-      const res = await axios.post(`${BASE_URL}/SignUp/manager`, body, config_headers);
+      };
+      const res = await axios.post(
+        `${BASE_URL}/SignUp/manager`,
+        body,
+        config_headers
+      );
       dispatch({
         type: MANAGER_REG_SUCCESS,
         payload: res,
@@ -114,26 +143,36 @@ import { BASE_URL } from "../../api/url";
     }
   };
 
-
-  export const registerCitizen =
+export const registerCitizen =
   ({ name, phoneNumber, email, password, confirmPassword, citizenID }) =>
   async (dispatch) => {
     try {
-      const body = JSON.stringify({  name, phoneNumber, email, password, confirmPassword, citizenID });
+      const body = JSON.stringify({
+        name,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword,
+        citizenID,
+      });
 
       const config_headers = {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      };  
-      const res = await axios.post(`${BASE_URL}/SignUp/citizen`, body, config_headers);
+      };
+      const res = await axios.post(
+        `${BASE_URL}/SignUp/citizen`,
+        body,
+        config_headers
+      );
       dispatch({
         type: CITIZEN_REG_SUCCESS,
         payload: res.data,
       });
 
-      console.log(res.data)
+      console.log(res.data);
       dispatch(setAlert(res.data.message, "success"));
 
       // dispatch(loadUser());
@@ -144,7 +183,6 @@ import { BASE_URL } from "../../api/url";
       });
     }
   };
-
 
 // Login User
 export const adminLogin =
@@ -159,8 +197,12 @@ export const adminLogin =
       };
       const body = JSON.stringify({ email, password });
 
-      const res = await axios.post(`${BASE_URL}/Login/admin`, body, config_headers);
-      localStorage.setItem("role", "admin")
+      const res = await axios.post(
+        `${BASE_URL}/Login/admin`,
+        body,
+        config_headers
+      );
+      // localStorage.setItem("role", "admin")
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -178,7 +220,7 @@ export const adminLogin =
     }
   };
 
-  export const managerLogin =
+export const managerLogin =
   ({ email, password }) =>
   async (dispatch) => {
     try {
@@ -190,8 +232,12 @@ export const adminLogin =
       };
       const body = JSON.stringify({ email, password });
 
-      const res = await axios.post(`${BASE_URL}/Login/manager`, body, config_headers);
-      localStorage.setItem("role", "manager")
+      const res = await axios.post(
+        `${BASE_URL}/Login/manager`,
+        body,
+        config_headers
+      );
+      localStorage.setItem("role", "manager");
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -209,7 +255,7 @@ export const adminLogin =
     }
   };
 
-  export const staffLogin =
+export const staffLogin =
   ({ email, password }) =>
   async (dispatch) => {
     try {
@@ -221,13 +267,17 @@ export const adminLogin =
       };
       const body = JSON.stringify({ email, password });
 
-      const res = await axios.post(`${BASE_URL}/Login/staff`, body, config_headers);
+      const res = await axios.post(
+        `${BASE_URL}/Login/staff`,
+        body,
+        config_headers
+      );
 
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-      localStorage.setItem("role", "staff")
+      localStorage.setItem("role", "staff");
 
       // dispatch(setAlert(res.data.msg, "success"));
 
@@ -240,7 +290,7 @@ export const adminLogin =
     }
   };
 
-  export const citizenLogin =
+export const citizenLogin =
   ({ email, password }) =>
   async (dispatch) => {
     try {
@@ -252,14 +302,17 @@ export const adminLogin =
       };
       const body = JSON.stringify({ email, password });
 
-      const res = await axios.post(`${BASE_URL}/Login/citizen`, body, config_headers);
-      
+      const res = await axios.post(
+        `${BASE_URL}/Login/citizen`,
+        body,
+        config_headers
+      );
 
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-      localStorage.setItem("role", "citizen")
+      localStorage.setItem("role", "citizen");
       // dispatch(setAlert(res.data.msg, "success"));
 
       // dispatch(loadUser());
@@ -271,17 +324,14 @@ export const adminLogin =
     }
   };
 
-
-  export const logOut = () =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: LOGOUT,
-      });
-      // dispatch(setAlert(res.data.msg, "success"));
-      // dispatch(loadUser());
-    } catch (err) {
-      dispatch(setAlert(err.response.data.msg, "danger"));
-    }
-  };
-
+export const logOut = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOGOUT,
+    });
+    // dispatch(setAlert(res.data.msg, "success"));
+    // dispatch(loadUser());
+  } catch (err) {
+    dispatch(setAlert(err.response.data.msg, "danger"));
+  }
+};
