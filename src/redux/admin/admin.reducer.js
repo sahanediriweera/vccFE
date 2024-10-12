@@ -8,7 +8,8 @@ import {
   DELETE_PROGRAM,
   GET_REALADMIN,
   CREATE_REALADMIN,
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  SET_ROLE,
 } from "./admin.types";
 
 const initialState = {
@@ -18,9 +19,10 @@ const initialState = {
   realAdmin: [],
   loading: false,
   error: {},
+  role: "", // Add role to the initial state
 };
 
-export default function answers(state = initialState, action) {
+export default function adminReducer(state = initialState, action) {
   switch (action.type) {
     case GET_MANAGERS:
       return {
@@ -46,12 +48,17 @@ export default function answers(state = initialState, action) {
         realAdmin: action.payload,
         loading: false,
       };
-      case ADMIN_ERROR:
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
+    case SET_ROLE: // Handle SET_ROLE here
+      return {
+        ...state,
+        role: action.payload,
+      };
+    case ADMIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

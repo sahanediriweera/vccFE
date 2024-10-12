@@ -10,7 +10,6 @@ import {
   DELETE_PROGRAM,
   GET_REALADMIN,
   CREATE_REALADMIN,
-
 } from "./admin.types";
 
 // import {  deleteSingleAnswer } from "../../api/answersApi";
@@ -25,7 +24,7 @@ export const getManagers = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/managers`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/managers`, config_headers);
     dispatch({
       type: GET_MANAGERS,
       payload: res.data,
@@ -33,38 +32,41 @@ export const getManagers = (id) => async (dispatch) => {
   } catch (err) {
     // console.log(err)
     // dispatch({
-      
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
     // });
   }
 };
 
-export const CreateManagers = ({id}) => async (dispatch) => {
-  try {
-    const config_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
-    };
-    const body = JSON.stringify({id});
-    const res = await axios.post(`${BASE_URL}/Admin/managers`, body ,config_headers);
-    dispatch({
-      type: CREATE_MANAGERS,
-      payload: res,
-    });
-  } catch (err) {
-    // console.log(err)
-    // dispatch({
-      
-    //   type: ANSWER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
-  }
-};
-
+export const CreateManagers =
+  ({ id }) =>
+  async (dispatch) => {
+    try {
+      const config_headers = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+        },
+      };
+      const body = JSON.stringify({ id });
+      const res = await axios.post(
+        `${BASE_URL}/Admin/managers`,
+        body,
+        config_headers
+      );
+      dispatch({
+        type: CREATE_MANAGERS,
+        payload: res,
+      });
+    } catch (err) {
+      // console.log(err)
+      // dispatch({
+      //   type: ANSWER_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // });
+    }
+  };
 
 export const getStaff = (id) => async (dispatch) => {
   try {
@@ -75,7 +77,7 @@ export const getStaff = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/staff`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/staff`, config_headers);
     dispatch({
       type: GET_STAFF,
       payload: res.data,
@@ -83,39 +85,43 @@ export const getStaff = (id) => async (dispatch) => {
   } catch (err) {
     // console.log(err)
     // dispatch({
-      
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
     // });
   }
 };
 
-export const CreateStaff = ({id}) => async (dispatch) => {
-  try {
-    const config_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
-    };
+export const CreateStaff =
+  ({ id }) =>
+  async (dispatch) => {
+    try {
+      const config_headers = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+        },
+      };
 
-    const body = JSON.stringify({id});
+      const body = JSON.stringify({ id });
 
-    const res = await axios.post(`${BASE_URL}/Admin/staff`,body,config_headers);
-    dispatch({
-      type: CREATE_STAFF,
-      payload: res,
-    });
-  } catch (err) {
-    // console.log(err)
-    // dispatch({
-      
-    //   type: ANSWER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
-  }
-};
+      const res = await axios.post(
+        `${BASE_URL}/Admin/staff`,
+        body,
+        config_headers
+      );
+      dispatch({
+        type: CREATE_STAFF,
+        payload: res,
+      });
+    } catch (err) {
+      // console.log(err)
+      // dispatch({
+      //   type: ANSWER_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // });
+    }
+  };
 
 export const getAdmin = () => async (dispatch) => {
   try {
@@ -126,7 +132,7 @@ export const getAdmin = () => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/admin`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/admin`, config_headers);
     dispatch({
       type: GET_ADMIN,
       payload: res.data,
@@ -134,67 +140,75 @@ export const getAdmin = () => async (dispatch) => {
   } catch (err) {
     // console.log(err)
     // dispatch({
-      
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
     // });
   }
 };
 
-export const CreateAdmin = ({superAdmin, userAdmin}) => async (dispatch) => {
-  try {
-    const config_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
-    };
+export const CreateAdmin =
+  ({ superAdmin, userAdmin }) =>
+  async (dispatch) => {
+    try {
+      const config_headers = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+        },
+      };
 
-    const body = JSON.stringify({superAdmin, userAdmin});
+      const body = JSON.stringify({ superAdmin, userAdmin });
 
-    const res = await axios.post(`${BASE_URL}/Admin/saveadmin`,body, config_headers);
-    dispatch({
-      type: CREATE_ADMIN,
-      payload: res,
-    });
-  } catch (err) {
-    // console.log(err)
-    // dispatch({
-      
-    //   type: ANSWER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
-  }
-};
+      const res = await axios.post(
+        `${BASE_URL}/Admin/saveadmin`,
+        body,
+        config_headers
+      );
+      dispatch({
+        type: CREATE_ADMIN,
+        payload: res,
+      });
+    } catch (err) {
+      // console.log(err)
+      // dispatch({
+      //   type: ANSWER_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // });
+    }
+  };
 
+export const DeleteProgram =
+  ({ superAdmin, userAdmin }) =>
+  async (dispatch) => {
+    try {
+      const config_headers = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+        },
+      };
 
-export const DeleteProgram = ({superAdmin, userAdmin}) => async (dispatch) => {
-  try {
-    const config_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
-    };
+      const body = JSON.stringify({ superAdmin, userAdmin });
 
-    const body = JSON.stringify({superAdmin, userAdmin});
-
-    const res = await axios.delete(`${BASE_URL}/Admin/saveadmin`,body, config_headers);
-    dispatch({
-      type: DELETE_PROGRAM,
-      payload: res,
-    });
-  } catch (err) {
-    // console.log(err)
-    // dispatch({
-      
-    //   type: ANSWER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
-  }
-};
+      const res = await axios.delete(
+        `${BASE_URL}/Admin/saveadmin`,
+        body,
+        config_headers
+      );
+      dispatch({
+        type: DELETE_PROGRAM,
+        payload: res,
+      });
+    } catch (err) {
+      // console.log(err)
+      // dispatch({
+      //   type: ANSWER_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // });
+    }
+  };
 
 export const getRealAdmin = () => async (dispatch) => {
   try {
@@ -205,13 +219,13 @@ export const getRealAdmin = () => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    const res = await axios.get(`${BASE_URL}/Admin/realAdmins`,config_headers);
+    const res = await axios.get(`${BASE_URL}/Admin/realAdmins`, config_headers);
     dispatch({
       type: GET_REALADMIN,
       payload: res.data,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     // dispatch({
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
@@ -219,31 +233,43 @@ export const getRealAdmin = () => async (dispatch) => {
   }
 };
 
+export const CreateRealAdmin =
+  ({ superAdminGuid, adminGuid }) =>
+  async (dispatch) => {
+    try {
+      const config_headers = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+        },
+      };
 
-export const CreateRealAdmin = ({superAdminGuid, adminGuid}) => async (dispatch) => {
-  try {
-    const config_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Accept: "application/json",
-      },
-    };
+      const body = JSON.stringify({ superAdminGuid, adminGuid });
 
-    const body = JSON.stringify({superAdminGuid, adminGuid});
-   
+      const res = await axios.post(
+        `${BASE_URL}/Admin/realAdminguid`,
+        body,
+        config_headers
+      );
+      dispatch({
+        type: CREATE_REALADMIN,
+        payload: res,
+      });
+    } catch (err) {
+      // console.log(err)
+      // dispatch({
+      //   type: ANSWER_ERROR,
+      //   payload: { msg: err.response.statusText, status: err.response.status },
+      // });
+    }
+  };
 
-    const res = await axios.post(`${BASE_URL}/Admin/realAdminguid`,body,config_headers);
-    dispatch({
-      type: CREATE_REALADMIN,
-      payload: res,
-    });
-  } catch (err) {
-    // console.log(err)
-    // dispatch({
-      
-    //   type: ANSWER_ERROR,
-    //   payload: { msg: err.response.statusText, status: err.response.status },
-    // });
-  }
+export const SET_ROLE = "SET_ROLE";
+
+export const set_role = (role) => {
+  return {
+    type: SET_ROLE,
+    payload: role,
+  };
 };
