@@ -21,7 +21,7 @@ import {
 } from "../redux/admin/admin.actions";
 import UserDetailsTable from "../Components/tables/adminTable";
 
-const Admin = ({
+const SuperAdmin = ({
   isAuthenticated,
   getManagers,
   getStaff,
@@ -164,16 +164,6 @@ const Admin = ({
       <ToastContainer />
       <div className="grid grid-cols-12 bg-[#0234E2] min-h-[100vh]">
         <div className="col-span-2 bg-blue-800 p-4 space-y-6">
-          {/* <div
-            className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
-            onClick={() => show_tab("realAdmins")}
-          >
-            <img
-              className="w-[50px] h-auto mr-3"
-              src="/assets/Rectangle36.png"
-            ></img>
-            <h1 className="text-white">Real Admin</h1>
-          </div>
           <div
             className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
             onClick={() => show_tab("admin")}
@@ -183,7 +173,7 @@ const Admin = ({
               src="/assets/Rectangle36.png"
             ></img>
             <h1 className="text-white">Admins</h1>
-          </div> */}
+          </div>
           <div
             className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
             onClick={() => show_tab("staff")}
@@ -243,7 +233,7 @@ const Admin = ({
               </div>
             </>
           )}
-          {/* {tab === 2 && admins && (
+          {tab === 2 && admins && (
             <>
               <UserDetailsTable data={admins} />
               <div className="flex justify-center mt-10 min-h-screen">
@@ -268,34 +258,8 @@ const Admin = ({
                 </div>
               </div>
             </>
-          )} */}
-          {/* {tab === 3 && realAdmins && (
-            <>
-              <UserDetailsTable data={realAdmins} />
-              <div className="flex justify-center items-center min-h-screen">
-                <div className="flex flex-col gap-5 items-center w-1/4">
-                  <input
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    placeholder="Enter Real Admin ID"
-                    onChange={(e) => setData(e.target.value)}
-                  />
-                  <Button
-                    text="Create Super Admin"
-                    handle_click={(e) => {
-                      e.preventDefault();
-                      CreateRealAdmin({
-                        superAdminGuid: auth.id,
-                        adminGuid: requestData,
-                      });
-                      setData("");
-                      toast.success("Super Admin created successfully!");
-                    }}
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </>
-          )} */}
+          )}
+
           {tab === 5 && (
             <div className="flex justify-center items-center min-h-screen">
               <div className="flex flex-col gap-5 items-center w-1/4">
@@ -378,4 +342,4 @@ export default connect(mapStateToProps, {
   CreateAdmin,
   CreateManagers,
   CreateStaff,
-})(Admin);
+})(SuperAdmin);
