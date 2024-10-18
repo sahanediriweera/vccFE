@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input } from "../Components/common/ui";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import { Button } from "../Components/common/ui";
+import { toast, ToastContainer } from "react-toastify";
 import Axios from "axios";
-import { JsonToTable } from "react-json-to-table";
 import { Navigate } from "react-router-dom";
-
 import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -19,7 +16,7 @@ import {
   CreateManagers,
   CreateStaff,
 } from "../redux/admin/admin.actions";
-import UserDetailsTable from "../Components/tables/adminTable";
+import UserDetailsTable from "../Components/tables/adminTable"; // Updated import for the UserDetailsTable component
 
 const SuperAdmin = ({
   isAuthenticated,
@@ -31,60 +28,19 @@ const SuperAdmin = ({
   admins,
   realAdmins,
   staff,
-  CreateRealAdmin,
-  CreateAdmin,
+  CreateAdmin, // CreateAdmin function for making API calls
   CreateManagers,
   CreateStaff,
 }) => {
-  const input_data_structure = {
-    delete_id: {
-      key: "delete_id",
-      text: "Delete Id",
-      type: "text",
-      value: "",
-      is_valid: true,
-      error: "",
-    },
-
-    approve_id: {
-      key: "approve_id",
-      text: "Approval Id",
-      type: "text",
-      value: "",
-      is_valid: true,
-      error: "",
-    },
-  };
-
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth); // Get authentication details
   const role = localStorage.getItem("role");
 
-  const [inputs, set_inputs] = useState(input_data_structure);
-  const [requestData, setData] = useState();
-  const [title, set_title] = useState("");
   const [tab, setTab] = useState(0);
-  const [data, set_data] = useState({});
-  const [myJson, setMyJson] = useState([]);
+  const [title, set_title] = useState("");
 
-  // Log the role whenever the component mounts
   useEffect(() => {
-    console.log("User role:", role);
-  }, [role]); // Dependency array contains 'role' so it will run when 'role' changes
-
-  const handle_change = (e, input) => {
-    input.value = e.target.value;
-    input.is_valid = e.target.value ? true : false;
-    input.error = e.target.value ? "" : "Please input the password";
-
-    let input_list = { ...inputs };
-    input_list[input.key] = input;
-    set_inputs(input_list);
-  };
-
-  const handle_submit = async () => {
-    const event = window.event;
-    event.preventDefault();
-  };
+    console.log("User role:", role); // Log the role whenever the component mounts
+  }, [role]);
 
   const show_tab = (tab) => {
     set_title(tab);
@@ -105,56 +61,6 @@ const SuperAdmin = ({
     }
   };
 
-  const handle_delete = () => {
-    try {
-      Axios.delete("127.0.0.1/api/" + title + inputs.delete_id.value)
-        .then((response) => {
-          if (response.status == 200) {
-            const user_data = {
-              token: response.data.result.token,
-            };
-
-            toast.success("Deleted successfully!");
-          }
-        })
-        .catch((e) => {
-          toast.error(e);
-        });
-    } catch (e) {
-      toast.error(e);
-    }
-  };
-
-  const handle_approve = () => {
-    try {
-      Axios.delete("127.0.0.1/api/" + title + inputs.delete_id.value)
-        .then((response) => {
-          if (response.status == 200) {
-            const user_data = {
-              token: response.data.result.token,
-            };
-
-            toast.success("Approved successfully!");
-          }
-        })
-        .catch((e) => {
-          toast.error(e);
-        });
-    } catch (e) {
-      toast.error(e);
-    }
-  };
-
-  // const myJson = {
-  //     Sponsors: [
-  //         { name: "john", email: "john@@xyz.com" },
-  //         { name: "jane", email: "jane@@xyz.com" },
-  //         { name: "jane", email: "jane@@xyz.com" },
-  //         { name: "jane", email: "jane@@xyz.com" },
-  //         { name: "jane", email: "jane@@xyz.com" },
-  //         { name: "jane", email: "jane@@xyz.com" },
-  //     ],
-  // };
   if (!isAuthenticated) {
     return <Navigate replace to={`/login`} />;
   }
@@ -171,6 +77,7 @@ const SuperAdmin = ({
             <img
               className="w-[50px] h-auto mr-3"
               src="/assets/Rectangle36.png"
+              alt="Admins"
             ></img>
             <h1 className="text-white">Admins</h1>
           </div>
@@ -181,6 +88,7 @@ const SuperAdmin = ({
             <img
               className="w-[50px] h-auto mr-3"
               src="/assets/Rectangle36.png"
+              alt="Staff"
             ></img>
             <h1 className="text-white">Staff</h1>
           </div>
@@ -191,6 +99,7 @@ const SuperAdmin = ({
             <img
               className="w-[50px] h-auto mr-3"
               src="/assets/Rectangle36.png"
+              alt="Managers"
             ></img>
             <h1 className="text-white">Managers</h1>
           </div>
@@ -201,129 +110,51 @@ const SuperAdmin = ({
             <img
               className="w-[50px] h-auto mr-3"
               src="/assets/Rectangle36.png"
+              alt="Remove Program"
             ></img>
             <h1 className="text-white">Remove Program</h1>
           </div>
         </div>
         <div className="col-span-10 bg-blue-600 rounded-l-3xl p-10">
           <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1>
+
+          {/* Conditionally render the table based on the tab */}
           {tab === 4 && managers && (
             <>
-              <UserDetailsTable data={managers} />
-              <div className="flex justify-center items-center min-h-screen">
-                <div className="flex flex-col gap-5 items-center">
-                  <input
-                    className="w-1/4 p-2 border border-gray-300 rounded-md"
-                    placeholder="Enter Manager ID"
-                    onChange={(e) => setData(e.target.value)}
-                  />
-                  <Button
-                    text="Approve Manager"
-                    handle_click={(e) => {
-                      e.preventDefault();
-                      CreateManagers({
-                        id: requestData,
-                      });
-                      setData("");
-                      toast.success("Manager approved successfully!");
-                    }}
-                    className="w-1/4"
-                  />
-                </div>
-              </div>
+              <UserDetailsTable data={managers} CreateAdmin={CreateAdmin} />{" "}
+              {/* Pass CreateAdmin to the table */}
             </>
           )}
           {tab === 2 && admins && (
             <>
-              <UserDetailsTable data={admins} />
-              <div className="flex justify-center mt-10 min-h-screen">
-                <div className="flex flex-col w-1/4 gap-5 items-center">
-                  <input
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    placeholder="Enter Admin ID"
-                    onChange={(e) => setData(e.target.value)}
-                  />
-                  <Button
-                    text="Create Admin"
-                    handle_click={(e) => {
-                      e.preventDefault();
-                      CreateAdmin({
-                        superAdmin: auth.id,
-                        userAdmin: requestData,
-                      });
-                      setData("");
-                      toast.success("Admin created successfully!");
-                    }}
-                  />
-                </div>
-              </div>
+              <UserDetailsTable data={admins} CreateAdmin={CreateAdmin} />{" "}
+              {/* Pass CreateAdmin to the table */}
             </>
-          )}
-
-          {tab === 5 && (
-            <div className="flex justify-center items-center min-h-screen">
-              <div className="flex flex-col gap-5 items-center w-1/4">
-                <input
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Enter Program to Remove"
-                  onChange={(e) => setData(e.target.value)}
-                />
-                <Button
-                  text="Remove Program"
-                  handle_click={() => {
-                    toast.success("Program removed successfully!");
-                  }}
-                  className="w-full"
-                />
-              </div>
-            </div>
           )}
           {tab === 1 && staff && (
             <>
-              <UserDetailsTable data={staff} />
-              <div className="flex justify-center items-center min-h-screen">
-                <div className="flex flex-col gap-5 items-center w-1/4">
-                  <input
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    placeholder="Enter Staff ID"
-                    onChange={(e) => setData(e.target.value)}
-                  />
-                  <Button
-                    text="Approve Staff"
-                    handle_click={(e) => {
-                      e.preventDefault();
-                      CreateStaff({
-                        id: requestData,
-                      });
-                      setData("");
-                      toast.success("Staff approved successfully!");
-                    }}
-                    className="w-full"
-                  />
-                </div>
-              </div>
+              <UserDetailsTable data={staff} CreateAdmin={CreateAdmin} />{" "}
+              {/* Pass CreateAdmin to the table */}
             </>
           )}
-
-          {/* <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <Input input={inputs.approve_id}></Input>
-                                <Button
-                                    text="Approve"
-                                    handle_click={handle_approve}
-                                ></Button>
-                            </div>
-                        </div> */}
         </div>
       </div>
     </>
   );
 };
 
-// Admin.propTypes = {
-//   login: PropTypes.func.isRequired,
-//   isAuthenticated: PropTypes.bool,
-// };
+SuperAdmin.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  getManagers: PropTypes.func.isRequired,
+  getStaff: PropTypes.func.isRequired,
+  getAdmin: PropTypes.func.isRequired,
+  getRealAdmin: PropTypes.func.isRequired,
+  CreateAdmin: PropTypes.func.isRequired,
+  managers: PropTypes.array,
+  admins: PropTypes.array,
+  realAdmins: PropTypes.array,
+  staff: PropTypes.array,
+};
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,

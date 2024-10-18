@@ -143,6 +143,7 @@ const Login = ({
     //     toast.error(e);
     // }
   };
+
   if (role === "citizen") {
     return <Navigate replace to={`/citizen`} />;
   } else if (role === "staff") {
@@ -151,6 +152,8 @@ const Login = ({
     return <Navigate replace to={`/manager`} />;
   } else if (role === "administrator") {
     return <Navigate replace to={`/admin`} />;
+  } else if (role === "super-admin") {
+    return <Navigate replace to={`/superAdmin`} />;
   }
 
   // if(isAuthenticated) {  return <Navigate replace to={`/home`} />;}
