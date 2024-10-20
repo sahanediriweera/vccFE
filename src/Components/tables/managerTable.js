@@ -3,7 +3,7 @@ import { toast } from "react-toastify"; // For notifications
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-export default function AdminTable({ data, CreateAdmin }) {
+export default function ManagerTable({ data, CreateManagers }) {
   const auth = useSelector((state) => state.auth); // Get auth state from redux
   const [requestData, setRequestData] = useState(""); // To hold the selected user ID for permission
 
@@ -11,9 +11,8 @@ export default function AdminTable({ data, CreateAdmin }) {
     setRequestData(userId); // Set the user ID for the API call
 
     try {
-      CreateAdmin({
-        superAdmin: auth.id, // Super admin ID from the auth state
-        userAdmin: userId, // The ID of the user being granted permission
+      CreateManagers({
+        id: userId, // The ID of the user being granted permission
       });
 
       toast.success("Permission granted successfully!"); // Success notification
@@ -65,7 +64,7 @@ export default function AdminTable({ data, CreateAdmin }) {
   );
 }
 
-AdminTable.propTypes = {
+ManagerTable.propTypes = {
   data: PropTypes.array.isRequired,
   CreateAdmin: PropTypes.func.isRequired,
 };

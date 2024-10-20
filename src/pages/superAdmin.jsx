@@ -16,7 +16,9 @@ import {
   CreateManagers,
   CreateStaff,
 } from "../redux/admin/admin.actions";
-import UserDetailsTable from "../Components/tables/adminTable"; // Updated import for the UserDetailsTable component
+import AdminTable from "../Components/tables/adminTable";
+import StaffTable from "../Components/tables/staffTable";
+import ManagerTable from "../Components/tables/managerTable";
 
 const SuperAdmin = ({
   isAuthenticated,
@@ -121,19 +123,19 @@ const SuperAdmin = ({
           {/* Conditionally render the table based on the tab */}
           {tab === 4 && managers && (
             <>
-              <UserDetailsTable data={managers} CreateAdmin={CreateAdmin} />{" "}
+              <ManagerTable data={managers} CreateManagers={CreateManagers} />{" "}
               {/* Pass CreateAdmin to the table */}
             </>
           )}
           {tab === 2 && admins && (
             <>
-              <UserDetailsTable data={admins} CreateAdmin={CreateAdmin} />{" "}
+              <AdminTable data={admins} CreateAdmin={CreateAdmin} />{" "}
               {/* Pass CreateAdmin to the table */}
             </>
           )}
           {tab === 1 && staff && (
             <>
-              <UserDetailsTable data={staff} CreateAdmin={CreateAdmin} />{" "}
+              <StaffTable data={staff} CreateStaff={CreateStaff} />{" "}
               {/* Pass CreateAdmin to the table */}
             </>
           )}
