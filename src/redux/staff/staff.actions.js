@@ -126,6 +126,8 @@ export const UpdatePatientVaccination =
           Accept: "application/json",
         },
       };
+
+      console.log(citizenguid);
       const res = await axios.post(
         `${BASE_URL}/Staff/UpdatePatientVaccination`,
         citizenguid,

@@ -30,10 +30,10 @@ const vaccineDescriptions = {
 };
 
 const locations = [
-  { key: 1, id: "kalegana", title: "kalega" },
-  { key: 2, id: "City2", title: "City 2" },
-  { key: 3, id: "Town1", title: "Town 1" },
-  { key: 4, id: "Town2", title: "Town 2" },
+  { key: 1, id: "Kalegana", title: "Kalegana" },
+  { key: 2, id: "Hapugala", title: "Hapugala" },
+  { key: 3, id: "Karapitiya", title: "Karapitiya" },
+  { key: 4, id: "Poddala", title: "Poddala" },
 ];
 
 const Manager = ({

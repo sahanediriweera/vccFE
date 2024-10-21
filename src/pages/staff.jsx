@@ -148,7 +148,7 @@ const Staff = ({
   const handle_post4 = async () => {
     const event = window.event;
     event.preventDefault();
-    UpdatePatientVaccination(addData2);
+    UpdatePatientVaccination(addData.citizenID);
   };
 
   const form_change = (e) => {
@@ -307,14 +307,6 @@ const Staff = ({
                     onChange={form_change}
                     readOnly
                   />
-                  <label>Birthday</label>
-                  <input
-                    id="address"
-                    value={addData.birthDate || ""}
-                    type="date"
-                    onChange={form_change}
-                    readOnly
-                  />
                   <label>Phone Number</label>
                   <input
                     id="phoneNumber"
@@ -330,6 +322,7 @@ const Staff = ({
                     type="number"
                     onChange={form_change}
                     placeholder="Enter Vaccination Count"
+                    readOnly
                   />
                   <label> Vaccination Date</label>
                   <input
@@ -337,6 +330,7 @@ const Staff = ({
                     value={addData.vaccinationDate || ""}
                     type="date"
                     onChange={form_change}
+                    readOnly
                   />
                   <label> Report Date</label>
                   <input
@@ -360,22 +354,8 @@ const Staff = ({
                     onChange={form_change}
                     placeholder="Enter Status"
                   />
-                  <label>Pending</label>
-                  <input
-                    id="pending"
-                    value={addData.pending || ""}
-                    type="tel"
-                    onChange={form_change}
-                    readOnly
-                  />
-                  <label>Vaccine Program</label>
-                  <input
-                    id="vaccineProgram"
-                    value={addData.vaccineProgram || ""}
-                    type="tel"
-                    onChange={form_change}
-                    readOnly
-                  />
+                  
+                  
                   <Button
                     text="Update Patient Details"
                     handle_click={handle_post}
@@ -437,6 +417,7 @@ const Staff = ({
                   <label> Id</label>
                   <input
                     input={addData2.id}
+                    value={addData.citizenID || ""}
                     id="id"
                     type={"text"}
                     onChange={form_change1}
@@ -459,7 +440,11 @@ const Staff = ({
             {block === 5 && (
               <>
                 <label>Id</label>
-                <input onChange={(e) => setUpId(e.target.value)} />
+                <input
+                  input={addData2.id}
+                  value={addData.citizenID || ""}
+                  onChange={(e) => setUpId(e.target.value)}
+                />
                 <Button
                   text="Update Patient Details"
                   handle_click={handle_post4}
