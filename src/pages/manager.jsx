@@ -30,7 +30,7 @@ const vaccineDescriptions = {
 };
 
 const locations = [
-  { key: 1, id: "City1", title: "City 1" },
+  { key: 1, id: "kalegana", title: "kalega" },
   { key: 2, id: "City2", title: "City 2" },
   { key: 3, id: "Town1", title: "Town 1" },
   { key: 4, id: "Town2", title: "Town 2" },
@@ -130,8 +130,11 @@ const Manager = ({
   const handle_create = () => {
     const event = window.event;
     event.preventDefault();
+    console.log(addData);
     CreateProgram(addData);
   };
+
+  const [showTable, setShowTable] = useState(false); // Default false to hide it
 
   if (!isAuthenticated) {
     return <Navigate replace to={`/login`} />;
@@ -204,9 +207,11 @@ const Manager = ({
         <div className="col-span-10 bg-[#0131B7] rounded-l-[50px]">
           <div className="mt-[50px] ml-20 w-[80%]">
             <h1 className="text-white font-extrabold text-3xl">{title}</h1>
-            {type === 1 && citizen && (
-              <JsonToTable id="o" key={"123"} json={citizen} />
-            )}
+            {type === 1 &&
+              citizen &&
+              showTable && ( // Add a condition `showTable`
+                <JsonToTable id="o" key={"123"} json={citizen} />
+              )}
           </div>
           <div className="mt-[50px] ml-20 w-[80%]">
             <h1 className="text-white font-extrabold text-3xl"></h1>
@@ -296,14 +301,20 @@ const Manager = ({
                   placeholderText="Select a date"
                 />
 
-                <label>Vaccine Id</label>
-                <input
-                  value={addData.vaccineIDs}
+                <label htmlFor="vaccineIDs">COVID Vaccine</label>
+                <select
                   id="vaccineIDs"
+                  value={addData.vaccineIDs}
                   onChange={handle_change}
                   className="p-2 rounded"
-                  placeholder="Enter Vaccine ID"
-                />
+                >
+                  <option value="Pfizer">Pfizer</option>
+                  <option value="Moderna">Moderna</option>
+                  <option value="AstraZeneca">AstraZeneca</option>
+                  <option value="Johnson">Johnson & Johnson </option>
+                  <option value="Covaxin">Covaxin</option>
+                  <option value="Sinopharm">Sinopharm</option>
+                </select>
 
                 <Button text="Create Program" handle_click={handle_create} />
               </div>

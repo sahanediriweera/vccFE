@@ -268,7 +268,10 @@ const Staff = ({
             {block === 2 && (
               <div className="">
                 <div className="grid ">
-                  <input placeholder="Patient Guid " onChange={onChange} />
+                  <input
+                    placeholder="Enter your Id card number"
+                    onChange={onChange}
+                  />
                   <Button text="Get Patient" handle_click={handle_submit} />
                 </div>
                 <div className="mt-[50px] ml-20 w-[80%] grid grid-cols-2 gap-4">
@@ -308,7 +311,7 @@ const Staff = ({
                   <input
                     id="address"
                     value={addData.birthDate || ""}
-                    type="tel"
+                    type="date"
                     onChange={form_change}
                     readOnly
                   />
@@ -383,13 +386,16 @@ const Staff = ({
 
             {block === 3 && (
               <div className="mt-[50px] ml-20 w-[80%] grid grid-cols-2 gap-4">
-                <label> Type</label>
-                <input
-                  input={addData1.type}
-                  id="type"
-                  type={"text"}
-                  onChange={form_change1}
-                />
+                <label htmlFor="type">Type</label>
+                <select id="type" value={addData1.type} onChange={form_change1}>
+                  <option value="Pfizer">Pfizer</option>
+                  <option value="Moderna">Moderna</option>
+                  <option value="AstraZeneca">AstraZeneca</option>
+                  <option value="Johnson & Johnson">Johnson & Johnson</option>
+                  <option value="Sinopharm">Sinopharm</option>
+                  <option value="Covaxin">Covaxin</option>
+                </select>
+
                 <label> BatchId</label>
 
                 <input
@@ -403,17 +409,19 @@ const Staff = ({
                   input={addData1.expirationDate}
                   id="expirationDate"
                   onChange={form_change1}
+                  type="date"
                 />
                 <label> Produced Date</label>
                 <input
                   input={addData1.producedDate}
                   id="producedDate"
                   onChange={form_change1}
+                  type="date"
                 />
                 <label> Count</label>
                 <input
                   input={addData1.count}
-                  type={"tel"}
+                  type={"number"}
                   id="count"
                   onChange={form_change1}
                 />
