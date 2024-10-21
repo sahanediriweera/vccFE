@@ -215,7 +215,15 @@ const Manager = ({
           </div>
           <div className="mt-[50px] ml-20 w-[80%]">
             <h1 className="text-white font-extrabold text-3xl"></h1>
-            {type === 2 && staff && <JsonToTable key={1} json={staff} />}
+            {type === 2 && staff && (
+              <JsonToTable
+                key={1}
+                json={staff.map(
+                  ({ id, dateofBirth, hospitalId, phoneNumber, ...rest }) =>
+                    rest
+                )}
+              />
+            )}
           </div>
           <div className="mt-[50px] ml-20 w-[80%]">
             <h1 className="text-white font-extrabold text-3xl"></h1>
