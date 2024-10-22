@@ -219,20 +219,28 @@ export const removeProgram = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
-    console.log("id", id);
-    const body = JSON.stringify({ id });
 
+    console.log("Program ID to delete:", id);
+
+    // Use the ID in the URL as a parameter instead of sending it in the body
     const res = await axios.delete(
-      `${BASE_URL}/Admin/programid`,
-      body,
+      `${BASE_URL}/Admin/programid/${id}`,
+
       config_headers
     );
+
+    // Dispatch the DELETE_PROGRAM action with the response data
     dispatch({
       type: DELETE_PROGRAM,
       payload: res.data,
     });
+
+    // Log success and optionally trigger a success toast notification
+    console.log("Program deleted successfully:", res.data);
   } catch (err) {
-    console.log(err);
+    console.error("Error deleting the program:", err);
+
+    // Optionally, trigger an error toast notification or handle error in the UI
     // dispatch({
     //   type: ANSWER_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
