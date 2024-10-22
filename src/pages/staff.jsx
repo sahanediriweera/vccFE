@@ -428,7 +428,7 @@ const Staff = ({
                   onChange={form_change1}
                 />
                 <Button
-                  text="Update Patient Details"
+                  text="Create Vaccine Batch"
                   handle_click={handle_1_post}
                 />
               </div>
