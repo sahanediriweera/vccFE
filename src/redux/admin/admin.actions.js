@@ -219,9 +219,12 @@ export const removeProgram = (id) => async (dispatch) => {
         Accept: "application/json",
       },
     };
+    console.log("id", id);
+    const body = JSON.stringify({ id });
+
     const res = await axios.delete(
       `${BASE_URL}/Admin/programid`,
-      id,
+      body,
       config_headers
     );
     dispatch({

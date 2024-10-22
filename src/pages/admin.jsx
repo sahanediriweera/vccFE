@@ -90,7 +90,7 @@ const SuperAdmin = ({
       <ToastContainer />
       <div className="grid grid-cols-12 bg-[#0234E2] min-h-[100vh]">
         <div className="col-span-2 bg-blue-800 p-4 space-y-6">
-          <div
+          {/* <div
             className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
             onClick={() => show_tab("admin")}
           >
@@ -100,7 +100,7 @@ const SuperAdmin = ({
               alt="Admins"
             ></img>
             <h1 className="text-white">Admins</h1>
-          </div>
+          </div> */}
           <div
             className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
             onClick={() => show_tab("staff")}
