@@ -220,7 +220,7 @@ export const removeProgram = (id) => async (dispatch) => {
       },
     };
     const res = await axios.delete(
-      `${BASE_URL}/Admin//api/Admin/programid`,
+      `${BASE_URL}/Admin/programid`,
       id,
       config_headers
     );
