@@ -148,7 +148,8 @@ const Staff = ({
   const handle_post4 = async () => {
     const event = window.event;
     event.preventDefault();
-    UpdatePatientVaccination(addData.citizenID);
+    console.log("Updating vaccination for ID:", addData.id); // Make sure addData.id is correct
+    await UpdatePatientVaccination({ id: addData.id }); // Pass ID as part of an object
   };
 
   const form_change = (e) => {
@@ -354,8 +355,7 @@ const Staff = ({
                     onChange={form_change}
                     placeholder="Enter Status"
                   />
-                  
-                  
+
                   <Button
                     text="Update Patient Details"
                     handle_click={handle_post}
@@ -417,7 +417,7 @@ const Staff = ({
                   <label> Id</label>
                   <input
                     input={addData2.id}
-                    value={addData.citizenID || ""}
+                    value={addData.id || ""}
                     id="id"
                     type={"text"}
                     onChange={form_change1}
@@ -442,7 +442,7 @@ const Staff = ({
                 <label>Id</label>
                 <input
                   input={addData2.id}
-                  value={addData.citizenID || ""}
+                  value={addData.id || ""}
                   onChange={(e) => setUpId(e.target.value)}
                 />
                 <Button

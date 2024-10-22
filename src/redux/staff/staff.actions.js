@@ -115,8 +115,9 @@ export const UpdateCitizen =
     }
   };
 
+// Action Creator
 export const UpdatePatientVaccination =
-  ({ citizenguid }) =>
+  ({ id }) =>
   async (dispatch) => {
     try {
       const config_headers = {
@@ -127,25 +128,24 @@ export const UpdatePatientVaccination =
         },
       };
 
-      console.log(citizenguid);
+      console.log("Updating vaccination for ID:", id);
       const res = await axios.post(
         `${BASE_URL}/Staff/UpdatePatientVaccination`,
-        citizenguid,
+        { id }, // Ensure you're sending the id as part of an object
         config_headers
       );
       dispatch({
         type: UPDATE_VACINATION,
-        payload: res,
+        payload: res.data, // Use res.data to access the response data
       });
     } catch (err) {
-      // console.log(err)
+      // console.error(err); // Log the error for debugging
       // dispatch({
       //   type: ANSWER_ERROR,
-      //   payload: { msg: err.response.statusText, status: err.response.status },
+      //   payload: { msg: err.response?.statusText || 'Error', status: err.response?.status },
       // });
     }
   };
-
 export const UpdateVaccinationBatch =
   ({ type, expirationDate, producedDate, count, batchId }) =>
   async (dispatch) => {
