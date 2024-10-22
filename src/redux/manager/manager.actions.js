@@ -11,6 +11,7 @@ import {
 } from "./manager.types";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const getStats = () => async (dispatch) => {
   try {
@@ -30,7 +31,9 @@ export const getStats = () => async (dispatch) => {
       type: GET_STATISTICS,
       payload: res,
     });
+    toast.success("Create Program successfully!");
   } catch (err) {
+    toast.error("Failed to create Program!");
     // dispatch({
     //   type: COMMENT_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },

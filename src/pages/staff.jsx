@@ -120,18 +120,32 @@ const Staff = ({
   const handle_submit = async () => {
     const event = window.event;
     event.preventDefault();
-    console.log(patientGuid);
-    GetPatient(patientGuid);
-    setAddData(paient);
-    console.log(paient);
-    console.log(addData);
+
+    try {
+      console.log(patientGuid);
+      GetPatient(patientGuid);
+      setAddData(paient);
+      console.log(paient);
+      console.log(addData);
+      toast.success("Patient data retrieved successfully!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to retrieve patient data!");
+    }
   };
 
   const handle_post = async () => {
     const event = window.event;
     event.preventDefault();
-    console.log(patientGuid);
-    UpdateCitizen(addData);
+
+    try {
+      console.log("Updating patient details for ID:", addData.id);
+      await UpdateCitizen(addData);
+      toast.success("Patient details updated successfully!");
+    } catch (error) {
+      console.error("Failed to update patient details:", error);
+      toast.error("Failed to update patient detail!");
+    }
   };
 
   const handle_1_post = async () => {
@@ -145,11 +159,21 @@ const Staff = ({
     event.preventDefault();
     CreateVaccineAdd(addData2);
   };
+
   const handle_post4 = async () => {
     const event = window.event;
     event.preventDefault();
-    console.log("Updating vaccination for ID:", addData.id); // Make sure addData.id is correct
-    await UpdatePatientVaccination({ id: addData.id }); // Pass ID as part of an object
+
+    try {
+      console.log("Updating vaccination for ID:", addData.id); // Log ID to ensure it's correct
+
+      await UpdatePatientVaccination({ id: addData.id }); // Call the update function
+
+      toast.success("Vaccination updated successfully!"); // Show success message
+    } catch (error) {
+      console.error("Failed to update vaccination:", error); // Log error details
+      toast.error("Failed to update vaccination!"); // Show error message
+    }
   };
 
   const form_change = (e) => {
@@ -331,7 +355,6 @@ const Staff = ({
                     value={addData.vaccinationDate || ""}
                     type="date"
                     onChange={form_change}
-                    readOnly
                   />
                   <label> Report Date</label>
                   <input
@@ -371,7 +394,6 @@ const Staff = ({
                   <option value="Pfizer">Pfizer</option>
                   <option value="Moderna">Moderna</option>
                   <option value="AstraZeneca">AstraZeneca</option>
-                  <option value="Johnson & Johnson">Johnson & Johnson</option>
                   <option value="Sinopharm">Sinopharm</option>
                   <option value="Covaxin">Covaxin</option>
                 </select>

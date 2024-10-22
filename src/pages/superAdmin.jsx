@@ -15,6 +15,7 @@ import {
   CreateAdmin,
   CreateManagers,
   CreateStaff,
+  removeProgram, // Import removeProgram action
 } from "../redux/admin/admin.actions";
 import AdminTable from "../Components/tables/adminTable";
 import StaffTable from "../Components/tables/staffTable";
@@ -30,18 +31,20 @@ const SuperAdmin = ({
   admins,
   realAdmins,
   staff,
-  CreateAdmin, // CreateAdmin function for making API calls
+  CreateAdmin,
   CreateManagers,
   CreateStaff,
+  removeProgram, // Add removeProgram to props
 }) => {
-  const auth = useSelector((state) => state.auth); // Get authentication details
+  const auth = useSelector((state) => state.auth);
   const role = localStorage.getItem("role");
 
   const [tab, setTab] = useState(0);
   const [title, set_title] = useState("");
+  const [programId, setProgramId] = useState(""); // State for Program ID
 
   useEffect(() => {
-    console.log("User role:", role); // Log the role whenever the component mounts
+    console.log("User role:", role);
   }, [role]);
 
   const show_tab = (tab) => {
@@ -60,6 +63,21 @@ const SuperAdmin = ({
       getManagers();
     } else if (tab === "removePro") {
       setTab(5);
+    }
+  };
+
+  const handleRemoveProgram = () => {
+    if (programId) {
+      removeProgram(programId)
+        .then(() => {
+          toast.success("Program removed successfully!");
+        })
+        .catch((err) => {
+          console.error("Failed to remove program:", err);
+          toast.error("Failed to remove program!");
+        });
+    } else {
+      toast.error("Please enter a valid Program ID!");
     }
   };
 
@@ -120,23 +138,44 @@ const SuperAdmin = ({
         <div className="col-span-10 bg-blue-600 rounded-l-3xl p-10">
           <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1>
 
-          {/* Conditionally render the table based on the tab */}
+          {tab === 5 && (
+            <>
+              <div className="flex flex-col items-left">
+                {/* <h1 className="text-white text-2xl font-extrabold mb-8">
+                  Remove Program
+                </h1> */}
+                <div className="flex flex-col items-left">
+                  <input
+                    type="text"
+                    placeholder="Program ID"
+                    className="w-96 p-2 rounded-md"
+                    value={programId} // Bind input value to state
+                    onChange={(e) => setProgramId(e.target.value)} // Update programId on change
+                  />
+                  <button
+                    className="bg-red-500 text-white px-4 py-1 rounded mt-4 w-96"
+                    onClick={handleRemoveProgram} // Call the handler on click
+                  >
+                    Remove Program
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
           {tab === 4 && managers && (
             <>
-              <ManagerTable data={managers} CreateManagers={CreateManagers} />{" "}
-              {/* Pass CreateAdmin to the table */}
+              <ManagerTable data={managers} CreateManagers={CreateManagers} />
             </>
           )}
           {tab === 2 && admins && (
             <>
-              <AdminTable data={admins} CreateAdmin={CreateAdmin} />{" "}
-              {/* Pass CreateAdmin to the table */}
+              <AdminTable data={admins} CreateAdmin={CreateAdmin} />
             </>
           )}
           {tab === 1 && staff && (
             <>
-              <StaffTable data={staff} CreateStaff={CreateStaff} />{" "}
-              {/* Pass CreateAdmin to the table */}
+              <StaffTable data={staff} CreateStaff={CreateStaff} />
             </>
           )}
         </div>
@@ -156,6 +195,7 @@ SuperAdmin.propTypes = {
   admins: PropTypes.array,
   realAdmins: PropTypes.array,
   staff: PropTypes.array,
+  removeProgram: PropTypes.func.isRequired, // Add prop type for removeProgram
 };
 
 const mapStateToProps = (state) => ({
@@ -175,4 +215,5 @@ export default connect(mapStateToProps, {
   CreateAdmin,
   CreateManagers,
   CreateStaff,
+  removeProgram, // Add removeProgram to connect
 })(SuperAdmin);

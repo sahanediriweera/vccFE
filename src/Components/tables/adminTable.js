@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify"; // For notifications
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 

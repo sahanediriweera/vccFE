@@ -127,14 +127,24 @@ const Manager = ({
     }
   };
 
-  const handle_create = () => {
-    const event = window.event;
-    event.preventDefault();
-    console.log(addData);
-    CreateProgram(addData);
-  };
+  const handle_create = async () => {
+    try {
+      const event = window.event;
+      event.preventDefault();
+      console.log(addData);
 
-  const [showTable, setShowTable] = useState(false); // Default false to hide it
+      // Assuming CreateProgram returns a promise
+      await CreateProgram(addData);
+
+      // Show success toast notification
+      toast.success("Create Program successfully!");
+    } catch (error) {
+      console.error("Failed to create Program:", error);
+
+      // Show error toast notification
+      toast.error("Failed to create Program!");
+    }
+  };
 
   if (!isAuthenticated) {
     return <Navigate replace to={`/login`} />;
@@ -208,9 +218,22 @@ const Manager = ({
           <div className="mt-[50px] ml-20 w-[80%]">
             <h1 className="text-white font-extrabold text-3xl">{title}</h1>
             {type === 1 &&
-              citizen &&
-              showTable && ( // Add a condition `showTable`
-                <JsonToTable id="o" key={"123"} json={citizen} />
+              citizen && ( // Add a condition `showTable`
+                <JsonToTable
+                  id="o"
+                  key={"123"}
+                  json={citizen.map(
+                    ({
+                      id,
+                      dateofBirth,
+                      hospitalId,
+                      phoneNumber,
+                      birthDate,
+                      pending,
+                      ...rest
+                    }) => rest
+                  )}
+                />
               )}
           </div>
           <div className="mt-[50px] ml-20 w-[80%]">
@@ -237,7 +260,12 @@ const Manager = ({
               </>
             )}
             {type === 3 && vaccinetype && (
-              <JsonToTable key={2} json={vaccinetype} />
+              <JsonToTable
+                key={2}
+                json={vaccinetype.map(
+                  ({ id, vaccinePrograms, ...rest }) => rest
+                )}
+              />
             )}
             {type === 4 && (
               <div className="mt-[50px] ml-20 w-[80%] grid grid-cols-2 gap-4">

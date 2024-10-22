@@ -210,6 +210,33 @@ export const DeleteProgram =
     }
   };
 
+export const removeProgram = (id) => async (dispatch) => {
+  try {
+    const config_headers = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+      },
+    };
+    const res = await axios.delete(
+      `${BASE_URL}/Admin//api/Admin/programid`,
+      id,
+      config_headers
+    );
+    dispatch({
+      type: DELETE_PROGRAM,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    // dispatch({
+    //   type: ANSWER_ERROR,
+    //   payload: { msg: err.response.statusText, status: err.response.status },
+    // });
+  }
+};
+
 export const getRealAdmin = () => async (dispatch) => {
   try {
     const config_headers = {
