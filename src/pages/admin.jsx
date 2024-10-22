@@ -90,6 +90,17 @@ const SuperAdmin = ({
       <ToastContainer />
       <div className="grid grid-cols-12 bg-[#0234E2] min-h-[100vh]">
         <div className="col-span-2 bg-blue-800 p-4 space-y-6">
+          {/* <div
+            className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
+            onClick={() => show_tab("admin")}
+          >
+            <img
+              className="w-[50px] h-auto mr-3"
+              src="/assets/Rectangle36.png"
+              alt="Admins"
+            ></img>
+            <h1 className="text-white">Admins</h1>
+          </div> */}
           <div
             className="flex items-center hover:bg-blue-600 p-2 cursor-pointer rounded-md"
             onClick={() => show_tab("staff")}
@@ -125,14 +136,14 @@ const SuperAdmin = ({
           </div>
         </div>
         <div className="col-span-10 bg-blue-600 rounded-l-3xl p-10">
-          <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1>
+          {/* <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1> */}
 
           {tab === 5 && (
             <>
               <div className="flex flex-col items-left">
-                {/* <h1 className="text-white text-2xl font-extrabold mb-8">
+                <h1 className="text-white text-2xl font-extrabold mb-8">
                   Remove Program
-                </h1> */}
+                </h1>
                 <div className="flex flex-col items-left">
                   <input
                     type="text"
@@ -154,16 +165,23 @@ const SuperAdmin = ({
 
           {tab === 4 && managers && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">
+                Managers
+              </h1>
               <ManagerTable data={managers} CreateManagers={CreateManagers} />
             </>
           )}
           {tab === 2 && admins && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">
+                Admins
+              </h1>
               <AdminTable data={admins} CreateAdmin={CreateAdmin} />
             </>
           )}
           {tab === 1 && staff && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">Staff</h1>
               <StaffTable data={staff} CreateStaff={CreateStaff} />
             </>
           )}

@@ -136,14 +136,14 @@ const SuperAdmin = ({
           </div>
         </div>
         <div className="col-span-10 bg-blue-600 rounded-l-3xl p-10">
-          <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1>
+          {/* <h1 className="text-white text-4xl font-extrabold mb-8">{title}</h1> */}
 
           {tab === 5 && (
             <>
               <div className="flex flex-col items-left">
-                {/* <h1 className="text-white text-2xl font-extrabold mb-8">
+                <h1 className="text-white text-2xl font-extrabold mb-8">
                   Remove Program
-                </h1> */}
+                </h1>
                 <div className="flex flex-col items-left">
                   <input
                     type="text"
@@ -165,16 +165,23 @@ const SuperAdmin = ({
 
           {tab === 4 && managers && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">
+                Managers
+              </h1>
               <ManagerTable data={managers} CreateManagers={CreateManagers} />
             </>
           )}
           {tab === 2 && admins && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">
+                Admins
+              </h1>
               <AdminTable data={admins} CreateAdmin={CreateAdmin} />
             </>
           )}
           {tab === 1 && staff && (
             <>
+              <h1 className="text-white text-2xl font-extrabold mb-8">Staff</h1>
               <StaffTable data={staff} CreateStaff={CreateStaff} />
             </>
           )}

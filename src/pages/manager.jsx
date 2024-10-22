@@ -346,8 +346,6 @@ const Manager = ({
                 >
                   <option value="Pfizer">Pfizer</option>
                   <option value="Moderna">Moderna</option>
-                  <option value="AstraZeneca">AstraZeneca</option>
-                  <option value="Covaxin">Covaxin</option>
                   <option value="Sinopharm">Sinopharm</option>
                 </select>
 

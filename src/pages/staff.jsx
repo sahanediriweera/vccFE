@@ -196,13 +196,13 @@ const Staff = ({
     set_title(tab);
     if (tab === "getDetails") {
       setBlock(1);
-    } else if (tab === "updateCitizen") {
+    } else if (tab === "Update Citizen") {
       setBlock(2);
-    } else if (tab === "vaccineBatch") {
+    } else if (tab === "Vaccine Batch") {
       setBlock(3);
-    } else if (tab === "addVaccine") {
+    } else if (tab === "Add Vaccine") {
       setBlock(4);
-    } else if (tab === "updateVac") {
+    } else if (tab === "Update Vaccine") {
       setBlock(5);
     }
   };
@@ -230,7 +230,7 @@ const Staff = ({
           </div> */}
           <div
             className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-            onClick={() => show_tab("updateCitizen")}
+            onClick={() => show_tab("Update Citizen")}
           >
             <img
               className="w-[70px] h-auto m-auto mt-[15px]"
@@ -242,7 +242,7 @@ const Staff = ({
           </div>
           <div
             className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-            onClick={() => show_tab("vaccineBatch")}
+            onClick={() => show_tab("Vaccine Batch")}
           >
             <img
               className="w-[70px] h-auto m-auto mt-[15px]"
@@ -254,7 +254,7 @@ const Staff = ({
           </div>
           <div
             className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-            onClick={() => show_tab("addVaccine")}
+            onClick={() => show_tab("Add Vaccine")}
           >
             <img
               className="w-[70px] h-auto m-auto mt-[15px]"
@@ -266,7 +266,7 @@ const Staff = ({
           </div>
           <div
             className="grid grid-cols-3 hover:bg-[#0256E2] cursor-pointer"
-            onClick={() => show_tab("updateVac")}
+            onClick={() => show_tab("Update Vaccine")}
           >
             <img
               className="w-[70px] h-auto m-auto mt-[15px]"
@@ -355,6 +355,7 @@ const Staff = ({
                     value={addData.vaccinationDate || ""}
                     type="date"
                     onChange={form_change}
+                    readOnly
                   />
                   <label> Report Date</label>
                   <input
@@ -468,7 +469,7 @@ const Staff = ({
                   onChange={(e) => setUpId(e.target.value)}
                 />
                 <Button
-                  text="Update Patient Details"
+                  text="Update Patient Count"
                   handle_click={handle_post4}
                 />
               </>
